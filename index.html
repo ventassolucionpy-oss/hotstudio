@@ -193,6 +193,19 @@ tr:hover td{background:var(--bg3)}
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M7.5 4.5v1.2M7.5 9.3v1.2M5.5 6.5C5.5 5.7 6.4 5 7.5 5s2 .7 2 1.7-2 1.8-2 1.8-2 .8-2 1.8.9 1.7 2 1.7 2-.7 2-1.7"/></svg>
       Precios & PYG/USD
     </div>
+    <div class="nav-section">Producto Completo</div>
+    <div class="nav-item" data-page="generador">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7.5 1v13M1 7.5h13"/><circle cx="7.5" cy="7.5" r="6"/></svg>
+      Generador de Producto
+    </div>
+    <div class="nav-item" data-page="upsells">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11l4-4 3 3 4-5"/><path d="M10 5h3v3"/></svg>
+      Stack de Upsells
+    </div>
+    <div class="nav-item" data-page="lovable">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="2" width="13" height="10" rx="1"/><path d="M4 12v2M11 12v2M2 14h11"/><path d="M5 6.5l1.5 1.5L9 5"/></svg>
+      Prompt Lovable
+    </div>
     <div class="nav-section">Lanzamiento</div>
     <div class="nav-item" data-page="checklist">
       <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 7.5l3 3 7-7"/><rect x="1" y="1" width="13" height="13" rx="2"/></svg>
@@ -1131,6 +1144,194 @@ fbq('track', 'Purchase', {
   </div>
 </div>
 
+<!-- ============ GENERADOR DE PRODUCTO ============ -->
+<div class="page" id="page-generador">
+  <div class="page-header">
+    <div class="page-title">Generador de Producto Completo</div>
+    <div class="page-sub">Seleccioná el producto base y generá tu oferta Low · Medium · High Ticket lista para Hotmart</div>
+  </div>
+  <div class="alert alert-info" style="margin-bottom:20px">
+    💡 Primero seleccioná un producto en <strong>Ideas de Productos</strong>. Luego elegí el nivel de ticket y generá el producto completo con nombre, módulos, bonuses y posicionamiento.
+  </div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Configurar Producto</div>
+      <div class="form-group">
+        <label class="form-label">Producto base seleccionado</label>
+        <input type="text" class="form-input" id="gp-base" placeholder="Seleccioná primero en Ideas de Productos" readonly style="color:var(--accent2)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nivel de ticket</label>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-outline btn-sm" id="btn-low" onclick="setTicket(this,'low')" style="flex:1">Low $27-47</button>
+          <button class="btn btn-outline btn-sm" id="btn-med" onclick="setTicket(this,'med')" style="flex:1">Medium $67-97</button>
+          <button class="btn btn-outline btn-sm" id="btn-high" onclick="setTicket(this,'high')" style="flex:1">High $197-297</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Avatar / cliente ideal</label>
+        <input type="text" class="form-input" id="gp-avatar" placeholder="Ej: Mujer de 35-55 con sobrepeso en LATAM">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Transformacion principal prometida</label>
+        <input type="text" class="form-input" id="gp-transf" placeholder="Ej: Pierde 10kg en 60 dias sin pasar hambre">
+      </div>
+      <button class="btn btn-primary" style="width:100%;margin-top:4px;justify-content:center" onclick="generarProducto()">Generar Producto Completo</button>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Referencia de Niveles de Ticket</div>
+      <div class="gap-12">
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2);border-left:3px solid var(--success)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span style="font-size:12px;font-weight:700;color:var(--success)">LOW TICKET — $27 a $47</span><span class="badge badge-green">Conv. 4-8%</span></div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">PDF / Ebook / Mini curso 3-5 modulos. Promesa especifica con resultado rapido. Sin friccion. Ideal para traer compradores al ecosistema y nutrir la lista.</div>
+        </div>
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2);border-left:3px solid var(--accent2)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span style="font-size:12px;font-weight:700;color:var(--accent2)">MEDIUM TICKET — $67 a $97</span><span class="badge badge-orange">Conv. 2-4%</span></div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">Curso completo 6-10 modulos + comunidad privada. El sweet spot de LATAM. Producto principal del funnel. Maximo ROAS con Meta Ads directo.</div>
+        </div>
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2);border-left:3px solid var(--accent)">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span style="font-size:12px;font-weight:700;color:var(--accent)">HIGH TICKET — $197 a $297</span><span class="badge badge-red">Conv. 0.5-1.5%</span></div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">Programa premium con mentoria + acceso vitalicio + soporte directo. Requiere VSL largo o llamada de cierre. Ideal como upsell de compradores.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card" id="gp-resultado" style="display:none">
+    <div class="card-title"><span class="dot"></span>Producto Generado — <span id="gp-nivel-label" style="color:var(--accent2)"></span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+      <div>
+        <div style="margin-bottom:14px"><div class="form-label">Nombre comercial</div><div id="gp-nombre" style="font-family:var(--font-h);font-size:17px;font-weight:800;color:var(--accent);padding:10px;background:var(--bg3);border-radius:var(--r2)"></div></div>
+        <div style="margin-bottom:14px"><div class="form-label">Tagline de venta</div><div id="gp-tagline" style="font-size:12px;color:var(--text2);padding:10px;background:var(--bg3);border-radius:var(--r2);line-height:1.5"></div></div>
+        <div style="margin-bottom:14px"><div class="form-label">Promesa principal (Hero)</div><div id="gp-promesa" style="font-size:12px;padding:10px;background:var(--bg3);border-radius:var(--r2);line-height:1.6;color:var(--text)"></div></div>
+        <div><div class="form-label">Precio recomendado</div><div id="gp-precio" style="font-family:var(--font-h);font-size:20px;font-weight:800;color:var(--success);padding:10px;background:var(--bg3);border-radius:var(--r2)"></div></div>
+      </div>
+      <div>
+        <div style="margin-bottom:14px"><div class="form-label">Modulos / estructura de contenido</div><div id="gp-modulos" style="font-size:11px;padding:12px;background:var(--bg3);border-radius:var(--r2);line-height:1.8;color:var(--text)"></div></div>
+        <div style="margin-bottom:14px"><div class="form-label">Bonuses incluidos</div><div id="gp-bonuses" style="font-size:11px;padding:12px;background:var(--bg3);border-radius:var(--r2);line-height:1.8;color:var(--text2)"></div></div>
+        <div><div class="form-label">Garantia y posicionamiento</div><div id="gp-garantia" style="font-size:11px;padding:12px;background:var(--bg3);border-radius:var(--r2);line-height:1.7;color:var(--text)"></div></div>
+      </div>
+    </div>
+    <div style="margin-top:14px"><div class="form-label">Bullets de venta (para landing y anuncios)</div><div id="gp-bullets" style="font-size:12px;padding:14px;background:var(--bg3);border-radius:var(--r2);line-height:2;color:var(--text)"></div></div>
+    <div style="display:flex;gap:10px;margin-top:14px">
+      <button class="btn btn-outline btn-sm" onclick="copyGP()">Copiar producto completo</button>
+      <button class="btn btn-primary btn-sm" onclick="sendToLovable()">Enviar a Prompt Lovable</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ UPSELLS ============ -->
+<div class="page" id="page-upsells">
+  <div class="page-header">
+    <div class="page-title">Stack de Upsells y Order Bumps</div>
+    <div class="page-sub">Genera el stack completo para maximizar el ticket promedio real de cada venta</div>
+  </div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Generar Stack</div>
+      <div class="form-group"><label class="form-label">Producto principal</label><input type="text" class="form-input" id="us-prod" placeholder="Se autocompleta desde Ideas de Productos" readonly style="color:var(--accent2)"></div>
+      <div class="form-group"><label class="form-label">Precio principal (USD)</label><input type="number" class="form-input" id="us-precio" value="67" oninput="calcTicketStack()"></div>
+      <div class="form-group">
+        <label class="form-label">Nicho</label>
+        <select class="form-input" id="us-nicho">
+          <option value="salud">Salud y Adelgazamiento</option>
+          <option value="finanzas">Finanzas e Inversion</option>
+          <option value="negocios">Negocios e IA</option>
+          <option value="relaciones">Relaciones y Seduccion</option>
+          <option value="idiomas">Idiomas</option>
+          <option value="espirit">Espiritualidad</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="generarUpsells()">Generar Stack Completo</button>
+      <div class="sep"></div>
+      <div class="card-title" style="margin-bottom:10px"><span class="dot"></span>Ticket Promedio Proyectado</div>
+      <div class="grid-2">
+        <div class="stat-card"><div class="stat-label">Sin upsells</div><div class="stat-value" id="ts-base" style="color:var(--text2)">$67</div></div>
+        <div class="stat-card"><div class="stat-label">Con stack</div><div class="stat-value" id="ts-total" style="color:var(--success)">$107</div></div>
+      </div>
+      <div class="stat-card" style="margin-top:10px"><div class="stat-label">Ingreso extra por 100 ventas</div><div class="stat-value" id="ts-extra" style="color:var(--accent)">+$4,000</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Anatomia del Stack Perfecto</div>
+      <div class="gap-12">
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2);border-left:3px solid var(--accent3)">
+          <div style="font-size:12px;font-weight:700;color:var(--accent3);margin-bottom:4px">ORDER BUMP — En checkout</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">Checkbox dentro de la pag. de pago de Hotmart. $17-$27. Acepta 25-35%. Complemento INMEDIATO al producto.</div>
+        </div>
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2);border-left:3px solid var(--accent2)">
+          <div style="font-size:12px;font-weight:700;color:var(--accent2);margin-bottom:4px">OTO 1 — Post-compra inmediato</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">Aparece segundos despues de pagar. Unica oportunidad. $37-$47. 20-25% acepta. Continuacion logica del producto.</div>
+        </div>
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2);border-left:3px solid var(--accent)">
+          <div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:4px">OTO 2 / Downsell</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">Si rechaza OTO1: version mas barata $17-$27. Si acepta: upgrade premium $97-$197. Recupera hasta 15% mas de ingresos.</div>
+        </div>
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2);border-left:3px solid #a855f7">
+          <div style="font-size:12px;font-weight:700;color:#d8a1ff;margin-bottom:4px">BACKEND — Email / WhatsApp dias 7-30</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.6">Secuencia post-compra. Ofrece high ticket, mentoria grupal o complementario. 5-10% convierte.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="us-stack-resultado" style="display:none">
+    <div class="card-title" style="margin-bottom:12px"><span class="dot"></span>Stack Generado para <span id="us-nicho-label" style="color:var(--accent2)"></span></div>
+    <div class="gap-12" id="us-cards"></div>
+  </div>
+</div>
+
+<!-- ============ PROMPT LOVABLE ============ -->
+<div class="page" id="page-lovable">
+  <div class="page-header">
+    <div class="page-title">Prompt para Landing en Lovable</div>
+    <div class="page-sub">Genera el prompt profesional completo para que Lovable construya tu landing de alta conversion</div>
+  </div>
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Datos del Producto</div>
+      <div class="form-group"><label class="form-label">Nombre del producto</label><input type="text" class="form-input" id="lv-nombre" placeholder="Se autocompleta desde Generador"></div>
+      <div class="form-group"><label class="form-label">Tagline / subtitulo</label><input type="text" class="form-input" id="lv-tagline" placeholder="Se autocompleta desde Generador"></div>
+      <div class="form-group"><label class="form-label">Promesa principal (headline)</label><input type="text" class="form-input" id="lv-promesa" placeholder="Ej: Pierde 10kg en 60 dias sin pasar hambre"></div>
+      <div class="form-group"><label class="form-label">Avatar / cliente ideal</label><input type="text" class="form-input" id="lv-avatar" placeholder="Ej: Mujer 35-55 anos, LATAM"></div>
+      <div class="form-group"><label class="form-label">Precio del producto (USD)</label><input type="text" class="form-input" id="lv-precio" placeholder="Ej: $67"></div>
+      <div class="form-group"><label class="form-label">Precio original tachado (USD)</label><input type="text" class="form-input" id="lv-precio-og" placeholder="Ej: $197"></div>
+      <div class="form-group">
+        <label class="form-label">Color principal de marca</label>
+        <select class="form-input" id="lv-color">
+          <option value="naranja">Naranja energetico #FF6B35 — Salud, Fitness</option>
+          <option value="azul">Azul profundo #1A3A6B — Finanzas, Negocios</option>
+          <option value="verde">Verde natural #2E7D32 — Bienestar</option>
+          <option value="morado">Morado #6B35A0 — Espiritualidad, Coaching</option>
+          <option value="rojo">Rojo #C0392B — Urgencia, Seduccion</option>
+        </select>
+      </div>
+      <div class="form-group"><label class="form-label">URL de checkout Hotmart</label><input type="text" class="form-input" id="lv-checkout" placeholder="https://pay.hotmart.com/..."></div>
+      <div class="form-group"><label class="form-label">ID del Pixel de Meta</label><input type="text" class="form-input" id="lv-pixel" placeholder="Ej: 1234567890123456"></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px" onclick="generarPromptLovable()">Generar Prompt Completo</button>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Lo que genera este prompt en Lovable</div>
+      <div class="gap-12">
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2)">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">10 Secciones de la Landing</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.9">1. Hero con headline + CTA principal<br>2. Seccion del problema (agitacion)<br>3. Presentacion del metodo<br>4. Modulos con iconos<br>5. Prueba social y testimonios<br>6. Stack de valor + bonuses<br>7. Garantia 30 dias<br>8. FAQ — 5 objeciones principales<br>9. CTA final con urgencia<br>10. Footer con legales</div>
+        </div>
+        <div style="padding:12px;background:var(--bg3);border-radius:var(--r2)">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">Optimizaciones tecnicas incluidas</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.9">Pixel Meta en head con ViewContent y InitiateCheckout<br>Sin menu ni links de fuga<br>Mobile-first con CTA flotante en mobile<br>Temporizador de 24hs con urgencia real<br>Diseno LATAM alta conversion probado</div>
+        </div>
+        <div class="alert alert-success">El prompt genera una landing lista para publicar y conectar directamente con Hotmart.</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" id="lv-resultado" style="display:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <div class="card-title" style="margin-bottom:0"><span class="dot"></span>Prompt Listo para Lovable</div>
+      <button class="btn btn-primary btn-sm" onclick="copyPrompt()">Copiar prompt completo</button>
+    </div>
+    <textarea id="lv-prompt-output" class="form-input" style="min-height:500px;font-size:11px;line-height:1.7;font-family:monospace" readonly></textarea>
+    <div class="alert alert-warn" style="margin-top:12px">Como usarlo: Copia el prompt, ve a lovable.dev, crea proyecto nuevo, pega el prompt en el chat. Lovable genera toda la landing en React lista para publicar.</div>
+  </div>
+</div>
+
 <!-- ============ CHECKLIST ============ -->
 <div class="page" id="page-checklist">
   <div class="page-header">
@@ -1193,6 +1394,15 @@ function selectProduct(el, name, cat, price, conv) {
   document.getElementById('st-prod').style.color = 'var(--success)';
   document.getElementById('pb-1').style.width = '100%';
   document.getElementById('c-prod').value = name;
+  // Populate new modules
+  selectedProductName = name;
+  document.getElementById('gp-base').value = name;
+  document.getElementById('us-prod').value = name;
+  // Auto-detect nicho for upsells
+  const nichoDetect = [['Dieta','salud'],['Glucosa','salud'],['Ayuno','salud'],['Inversi','finanzas'],['IA','negocios'],['Dropshipping','negocios'],['Seducci','relaciones'],['Ingl','idiomas'],['Tarot','espirit'],['Manifest','espirit']];
+  for (const [key, val] of nichoDetect) {
+    if (name.includes(key)) { document.getElementById('us-nicho').value = val; break; }
+  }
   buildCopy();
 }
 
@@ -1431,6 +1641,684 @@ function updateCkProg() {
   document.getElementById('st-check').textContent = pct + '%';
   document.getElementById('pb-3').style.width = pct + '%';
 }
+
+
+// ─── GLOBAL STATE ───
+let selectedProductName = '';
+let selectedTicket = 'med';
+let generatedProduct = {};
+
+// ─── PRODUCT SELECT OVERRIDE ─── (extend existing)
+const _origSelectProduct = window.selectProduct;
+
+// Override to also populate new modules
+function selectProduct(el, name, cat, price, conv) {
+  document.querySelectorAll('.prod-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('prod-seleccionado').style.display = 'block';
+  document.getElementById('prod-sel-nombre').textContent = name;
+  document.getElementById('prod-sel-precio').textContent = price;
+  document.getElementById('prod-sel-conv').textContent = conv;
+  document.getElementById('st-prod').textContent = '✓ ' + name;
+  document.getElementById('st-prod').style.color = 'var(--success)';
+  document.getElementById('pb-1').style.width = '100%';
+  document.getElementById('c-prod').value = name;
+  // Populate new modules
+  selectedProductName = name;
+  document.getElementById('gp-base').value = name;
+  document.getElementById('us-prod').value = name;
+  // Auto-detect nicho
+  const nichoMap = {
+    'Dieta': 'salud', 'Glucosa': 'salud', 'Ayuno': 'salud',
+    'Inversi': 'finanzas', 'IA': 'negocios', 'Dropshipping': 'negocios',
+    'Seducci': 'relaciones', 'Ingl': 'idiomas', 'Tarot': 'espirit'
+  };
+  for (const [key, val] of Object.entries(nichoMap)) {
+    if (name.includes(key)) {
+      document.getElementById('us-nicho').value = val;
+      document.getElementById('lv-nicho') && (document.getElementById('lv-nicho').value = val);
+      break;
+    }
+  }
+  buildCopy();
+}
+
+// ─── TICKET SELECTOR ───
+function setTicket(btn, level) {
+  selectedTicket = level;
+  ['btn-low','btn-med','btn-high'].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) { b.classList.remove('btn-primary'); b.classList.add('btn-outline'); }
+  });
+  const map = {low:'btn-low', med:'btn-med', high:'btn-high'};
+  const active = document.getElementById(map[level]);
+  if (active) { active.classList.remove('btn-outline'); active.classList.add('btn-primary'); }
+}
+
+// ─── PRODUCT DATA BANK ───
+const productDB = {
+  salud: {
+    low: {
+      nombre: 'Detox 21: Guia de Arranque Cetogenico',
+      tagline: 'El manual de las primeras 3 semanas que nadie te dio',
+      promesa: 'Pierde los primeros 4 a 6 kg en 21 dias con el plan de alimentacion mas simple del mundo — sin contar calorias, sin pasar hambre y sin necesitar experiencia previa.',
+      precio: '$37', precioOG: '$97',
+      modulos: 'PDF + Checklist interactivo\n\nCapitulo 1: Que es la cetosis y por que funciona en LATAM\nCapitulo 2: Los 7 alimentos que eliminan la grasa visceral\nCapitulo 3: Plan de comidas semana 1, 2 y 3\nCapitulo 4: Lista de compras con precios en guaranies\nCapitulo 5: Como superar los primeros 3 dias (la fase critica)',
+      bonuses: 'BONUS 1: Recetario express — 15 recetas listas en menos de 20 minutos (val. $17)\nBONUS 2: Guia de sustitucion de ingredientes locales (val. $9)\nBONUS 3: Tabla de seguimiento de peso semana a semana (val. $7)',
+      garantia: 'Garantia 30 dias sin preguntas. Si seguiste el plan y no viste resultados, devolvemos el 100% del dinero. Riesgo cero.',
+      bullets: '✅ Funciona sin ir al gym ni cambiar tu rutina diaria\n✅ Plan adaptado a ingredientes que se consiguen en supermercados locales\n✅ Resultados visibles en los primeros 7 dias o te devolvemos el dinero\n✅ Sin suplementos caros, sin batidos de proteina, sin comida extranjera\n✅ Mas de 2,000 personas en LATAM ya lo usaron este ano\n✅ Acceso inmediato — empieza hoy mismo'
+    },
+    med: {
+      nombre: 'Metodo Keto LATAM 60 — Transformacion Completa',
+      tagline: 'El sistema definitivo para perder 8 a 12 kg en 60 dias sin dietas imposibles',
+      promesa: 'Descubre el metodo que ya transformo a mas de 5,000 personas en LATAM: pierde entre 8 y 12 kg de grasa real en 60 dias, recupera tu energia y volve a usar la ropa que tanto extranas — sin pasar hambre ni ir al gimnasio.',
+      precio: '$67', precioOG: '$197',
+      modulos: 'Curso en video (8 modulos + PDFs descargables)\n\nModulo 1: La ciencia de la cetosis explicada simple\nModulo 2: Protocolo de inicio — los 7 dias decisivos\nModulo 3: Plan de alimentacion semanas 1 a 4\nModulo 4: Plan de alimentacion semanas 5 a 8\nModulo 5: Cetosis sin sufrir — como manejar los antojos\nModulo 6: Recetario completo LATAM (40 recetas)\nModulo 7: Ejercicio opcional — rutinas de 15 min en casa\nModulo 8: Mantenimiento — como no recuperar el peso',
+      bonuses: 'BONUS 1: Comunidad privada en Telegram por 6 meses (val. $47)\nBONUS 2: Recetario de postres cetogenicos sin culpa (val. $27)\nBONUS 3: Guia de cetosis para diabeticos tipo 2 (val. $37)\nBONUS 4: Sesion grupal en vivo mensual con preguntas y respuestas (val. $47)',
+      garantia: 'Garantia incondicional de 30 dias. Si en 30 dias no ves cambios reales en tu cuerpo, te devolvemos el 100% sin preguntas, sin formularios, sin excusas. Confiamos en el metodo.',
+      bullets: '✅ Sistema probado en mas de 5,000 personas en Argentina, Paraguay, Bolivia y Peru\n✅ Videos claros y concretos — cada modulo dura menos de 20 minutos\n✅ Recetario con ingredientes que se compran en cualquier mercado de LATAM\n✅ Comunidad activa de soporte — nunca vas a estar solo en el proceso\n✅ Acceso de por vida al material y a todas las actualizaciones futuras\n✅ Sin efecto rebote — aprenderás a comer bien para siempre\n✅ Resultados documentados: -8 a -12 kg promedio en los primeros 60 dias'
+    },
+    high: {
+      nombre: 'Programa Elite Keto LATAM — Transformacion VIP 90 Dias',
+      tagline: 'Mentoría personalizada + comunidad premium + seguimiento semanal',
+      promesa: 'El unico programa en LATAM donde un coach certificado te acompana PERSONALMENTE durante 90 dias hasta que logres perder entre 15 y 25 kg, recuperes tu salud y nunca mas necesites una dieta de moda.',
+      precio: '$247', precioOG: '$497',
+      modulos: 'Programa completo de 90 dias con acceso total\n\nSemanas 1-4: Protocolo de activacion cetogenica supervisado\nSemanas 5-8: Fase de quema acelerada con ajustes personalizados\nSemanas 9-12: Consolidacion y protocolo anti-rebote\n\nInclye: Curso base completo + actualizaciones + check-in semanal\n3 llamadas de mentoría individual (45 min cada una)\nPlan alimenticio 100% personalizado segun tu metabolismo\nAcceso al grupo VIP exclusivo (max 20 personas por cohorte)',
+      bonuses: 'BONUS 1: Analisis de composicion corporal digital (val. $67)\nBONUS 2: Guia de suplementacion basica en LATAM (val. $37)\nBONUS 3: Pack de recetas premium — 80 recetas gourmet cetogenicas (val. $47)\nBONUS 4: Acceso de por vida a futuras cohortes del programa (val. $247)',
+      garantia: 'Garantia de resultado o devolucion total. Si completas los 90 dias siguiendo el programa y no perdiste al menos 10 kg, te devolvemos el 100% del dinero. Esta es nuestra promesa de alto ticket.',
+      bullets: '✅ Acompanamiento personalizado — no sos un numero, sos una persona con objetivos unicos\n✅ Plan alimenticio hecho especificamente para TU metabolismo y TU estilo de vida\n✅ Check-in semanal para ajustar el programa en tiempo real\n✅ Grupo VIP de maximo 20 personas — atencion real, no masiva\n✅ 3 llamadas de mentoria individual para resolver dudas profundas\n✅ Resultado garantizado por contrato — perdida minima de 10 kg o devolucion total\n✅ Para quienes ya probaron todo y necesitan acompanamiento real de expertos'
+    }
+  },
+  finanzas: {
+    low: {
+      nombre: 'Ahorra tu Primer Millon de Guaranies en 90 Dias',
+      tagline: 'El sistema de ahorro que cualquier persona puede seguir, gane lo que gane',
+      promesa: 'Aprende el metodo de los 4 sobres que te permite ahorrar tu primer millon de guaranies en menos de 90 dias — aunque hoy creas que es imposible con tu sueldo actual.',
+      precio: '$27', precioOG: '$67',
+      modulos: 'Ebook PDF + planillas descargables\n\nParte 1: El diagnostico financiero — donde estas realmente\nParte 2: El metodo de los 4 sobres adaptado a LATAM\nParte 3: Como cortar gastos sin sufrir (el metodo de los 3 cortes)\nParte 4: Automatizacion del ahorro — que el dinero se ahorre solo\nParte 5: Tu primer millon — el plan de 90 dias dia a dia',
+      bonuses: 'BONUS 1: Planilla Excel de presupuesto mensual (val. $12)\nBONUS 2: Lista de las 20 apps gratuitas para ahorrar en LATAM (val. $9)',
+      garantia: 'Garantia 30 dias. Si seguiste el plan y no lograste ahorrar nada, devolucion total sin preguntas.',
+      bullets: '✅ Funciona con cualquier nivel de ingresos — desde salario minimo\n✅ Planillas listas para completar — no necesitas saber de finanzas\n✅ Sistema probado por cientos de familias paraguayas\n✅ Sin inversiones, sin criptomonedas, sin riesgos — solo ahorro puro'
+    },
+    med: {
+      nombre: 'Inversion desde Cero LATAM — De Ahorrador a Inversor',
+      tagline: 'El metodo paso a paso para hacer crecer tu dinero aunque nunca hayas invertido',
+      promesa: 'En 8 semanas aprenderás como pasar de tener el dinero parado en el banco a tener tu primer portafolio de inversiones activo — con acciones, cedears y criptomonedas — aunque nunca hayas invertido un guarani en tu vida.',
+      precio: '$67', precioOG: '$197',
+      modulos: 'Curso video 7 modulos + comunidad\n\nModulo 1: Mentalidad inversora — por que el 95% pierde dinero\nModulo 2: Las 4 reglas de oro antes de invertir un peso\nModulo 3: Acciones y CEDEARs para latinoamericanos\nModulo 4: Criptomonedas sin riesgo extremo — la estrategia DCA\nModulo 5: Fondos de inversion y ETFs accesibles desde LATAM\nModulo 6: Tu portafolio de primer nivel — como armarlo hoy\nModulo 7: Automatizacion — invierte mientras dormis',
+      bonuses: 'BONUS 1: Comunidad privada de inversores LATAM (val. $47)\nBONUS 2: Plantilla de seguimiento de portafolio (val. $27)\nBONUS 3: Guia de brokers disponibles desde Paraguay (val. $17)',
+      garantia: 'Garantia 30 dias sin preguntas. Si no ves valor en el metodo, devolucion total.',
+      bullets: '✅ Sin experiencia previa necesaria — empieza desde cero absoluto\n✅ Brokers accesibles desde Paraguay, Argentina, Bolivia y Peru\n✅ Estrategia conservadora y agresiva — vos elegis el nivel de riesgo\n✅ Comunidad activa de inversores LATAM para dudas y seguimiento\n✅ Actualizaciones del curso incluidas de por vida'
+    },
+    high: {
+      nombre: 'Academia de Inversores Elite LATAM — Programa 6 Meses',
+      tagline: 'Mentoria grupal + portafolio supervisado + acceso a operaciones reales',
+      promesa: 'El unico programa en LATAM donde aprenderás a gestionar un portafolio real de inversiones bajo la supervision directa de un trader con 10 anos de experiencia — con acceso a todas las operaciones en vivo y mentoria grupal semanal.',
+      precio: '$297', precioOG: '$597',
+      modulos: '6 meses de programa intensivo\n\nMes 1-2: Fundamentos avanzados y construccion del portafolio\nMes 3-4: Trading activo supervisado con operaciones en vivo\nMes 5-6: Gestion de riesgo avanzada y escala del portafolio\n\nInclye: Mentoria grupal semanal en vivo\nAcceso al canal de senales de trading\nRevision mensual individual de tu portafolio\nCertificado de completud del programa',
+      bonuses: 'BONUS 1: Acceso de por vida al canal de senales (val. $197)\nBONUS 2: Curso de analisis tecnico avanzado (val. $127)\nBONUS 3: 2 sesiones de coaching individual (val. $147)',
+      garantia: 'Garantia de satisfaccion total de 30 dias. Si en el primer mes no sientes que el programa vale 10 veces lo que pagaste, devolucion completa.',
+      bullets: '✅ Operaciones reales compartidas en vivo — aprendes haciendo, no solo viendo\n✅ Mentoria grupal semanal — tus dudas resueltas por un experto real\n✅ Canal de senales activo todos los dias de la semana\n✅ Maximo 30 participantes por cohorte — acceso real al mentor\n✅ Certificado reconocido en LATAM al completar el programa'
+    }
+  },
+  negocios: {
+    low: {
+      nombre: 'IA para Ganar Dinero Esta Semana — Guia Practica',
+      tagline: '5 formas de facturar con inteligencia artificial desde tu telefono',
+      promesa: 'Descubre las 5 formas mas rapidas de ganar tus primeros $100 USD usando herramientas de IA gratuitas — sin experiencia tecnica, sin inversion inicial y empezando esta misma semana.',
+      precio: '$27', precioOG: '$67',
+      modulos: 'PDF guia + plantillas listas\n\nCapitulo 1: Las 5 IAs gratuitas que generan dinero en LATAM\nCapitulo 2: Servicios que se venden solos con ChatGPT\nCapitulo 3: Como conseguir tus primeros 3 clientes en 48 horas\nCapitulo 4: Plantillas de propuesta listas para copiar y usar\nCapitulo 5: De $100 a $1,000 — el escalado simple',
+      bonuses: 'BONUS 1: Pack de 20 prompts de ChatGPT para servicios que se venden (val. $17)\nBONUS 2: Guia de plataformas de freelance desde Paraguay (val. $12)',
+      garantia: 'Garantia 30 dias. Si no ves una oportunidad concreta de ganar dinero, devolucion total.',
+      bullets: '✅ Usas el telefono que ya tenes — no necesitas computadora de alta gama\n✅ Con herramientas 100% gratuitas — inversion inicial cero\n✅ Resultados en menos de 7 dias siguiendo el plan\n✅ Casos reales de personas en Paraguay y LATAM'
+    },
+    med: {
+      nombre: 'Agencia IA — Construye tu Negocio Digital con Inteligencia Artificial',
+      tagline: 'El sistema para facturar $1,000 USD al mes ofreciendo servicios con IA',
+      promesa: 'Aprende exactamente como construir una agencia de servicios digitales usando IA y llegar a facturar $1,000 USD al mes en 90 dias — sin tener empleados, sin experiencia previa y trabajando desde cualquier lugar.',
+      precio: '$97', precioOG: '$247',
+      modulos: 'Curso video 9 modulos + plantillas + comunidad\n\nModulo 1: El modelo de negocio de agencia IA explicado\nModulo 2: Los 8 servicios con IA mas demandados en LATAM 2025\nModulo 3: Configuracion de tu agencia en 48 horas\nModulo 4: Captacion de clientes — LinkedIn, Instagram y WhatsApp\nModulo 5: Propuestas que cierran — plantillas y scripts\nModulo 6: Entrega del servicio con IA en 90% menos tiempo\nModulo 7: Sistematizacion — que el negocio funcione sin vos\nModulo 8: Escala — de $1K a $5K al mes\nModulo 9: Herramientas avanzadas — Make, Zapier, Notion AI',
+      bonuses: 'BONUS 1: Pack 50 prompts especializados por industria (val. $47)\nBONUS 2: Comunidad privada de agentes IA LATAM (val. $67)\nBONUS 3: Plantillas de contratos y propuestas (val. $37)\nBONUS 4: Directorio de 200 potenciales clientes PYME en LATAM (val. $47)',
+      garantia: 'Garantia 30 dias. Si sigues el metodo y no consigues tu primer cliente, devolucion completa. Confiamos 100% en el sistema.',
+      bullets: '✅ El modelo de negocio mas rentable de 2025 en LATAM\n✅ Sin empleados, sin oficina, sin inversion en publicidad inicial\n✅ Clientes que pagan $200-$500 USD al mes por servicios recurrentes\n✅ Sistema completo de captacion, venta y entrega automatizado\n✅ Comunidad activa con agentes que ya facturan $3K+ al mes'
+    },
+    high: {
+      nombre: 'Mastermind Agencia IA — Programa Elite de 4 Meses',
+      tagline: 'Implementacion supervisada + mentoria semanal + tu primera agencia funcionando',
+      promesa: 'El unico programa donde un experto te acompana semana a semana hasta que tu agencia de IA este facturando de forma recurrente — con clientes reales, procesos automatizados y resultados documentados en 4 meses.',
+      precio: '$297', precioOG: '$597',
+      modulos: 'Programa de 4 meses con implementacion real\n\nMes 1: Fundacion — modelo, posicionamiento y primeros clientes\nMes 2: Sistematizacion — procesos y entrega escalable\nMes 3: Escala — mas clientes, tickets mas altos\nMes 4: Automatizacion total y liberacion de tiempo\n\nMentoria grupal semanal en vivo (16 sesiones)\nRevision mensual de tu negocio con feedback directo\nAcceso al grupo privado con mentores y pares',
+      bonuses: 'BONUS 1: Acceso de por vida al curso base (val. $97)\nBONUS 2: 2 sesiones de coaching individual 1 a 1 (val. $197)\nBONUS 3: Directorio de 500 contactos de potenciales clientes (val. $97)',
+      garantia: 'Si en 4 meses siguiendo el programa no conseguiste al menos 2 clientes recurrentes, devolucion del 100% del dinero. Sin excusas.',
+      bullets: '✅ Implementacion real — no teoria, sino tu negocio funcionando\n✅ Mentoria semanal con feedback directo sobre tu caso especifico\n✅ Red de agentes IA de elite que se pasan clientes y oportunidades\n✅ Sistema de accountability — vas a tener que rendir cuentas y eso acelera todo\n✅ Garantia de resultado real o devolucion total'
+    }
+  },
+  relaciones: {
+    low: {
+      nombre: 'El Codigo del Primer Mensaje — Guia de Seduccion Digital',
+      tagline: 'Como escribir mensajes que generan respuesta y citas reales',
+      promesa: 'Descubre las 7 tecnicas de mensaje que hacen que cualquier persona quiera responderte y salir contigo — aunque creas que no eres atractivo o no sabes de que hablar.',
+      precio: '$27', precioOG: '$67',
+      modulos: 'Ebook PDF + ejemplos reales de conversaciones\n\nCapitulo 1: Por que el 90% de los mensajes no genera respuesta\nCapitulo 2: El gancho perfecto — como iniciar cualquier conversacion\nCapitulo 3: Los 7 mensajes que siempre funcionan\nCapitulo 4: Como llevar la conversacion a la cita\nCapitulo 5: Ejemplos reales con analisis completo',
+      bonuses: 'BONUS 1: Pack de 30 openers probados para Instagram y Tinder (val. $17)\nBONUS 2: Guia de perfil de Instagram que atrae (val. $12)',
+      garantia: 'Garantia 30 dias. Si aplicas las tecnicas y no mejoras tus respuestas, devolucion total.',
+      bullets: '✅ Tecnicas probadas con mas de 1,000 conversaciones reales analizadas\n✅ Funciona en Instagram, WhatsApp, Tinder y cualquier app\n✅ Sin lineas de conquista cursis — metodo natural y autentico\n✅ Resultados desde la primera semana de aplicacion'
+    },
+    med: {
+      nombre: 'Alpha Code — El Metodo Completo de Seduccion Masculina',
+      tagline: 'De la inseguridad total a la confianza que atrae — en 60 dias',
+      promesa: 'Descubre el sistema completo que transforma a hombres inseguros y sin resultados en hombres con presencia, confianza y la vida social que siempre quisieron — en 60 dias de entrenamiento mental y social.',
+      precio: '$67', precioOG: '$197',
+      modulos: 'Curso video 8 modulos + comunidad masculina\n\nModulo 1: El diagnostico — por que no estan funcionando las cosas\nModulo 2: Mentalidad Alpha — la base que lo cambia todo\nModulo 3: Lenguaje corporal y presencia — el imán silencioso\nModulo 4: Comunicacion poderosa — como hablar que impacta\nModulo 5: Enfrentando el rechazo — el secreto que libera\nModulo 6: La primera cita perfecta — sistema paso a paso\nModulo 7: Construyendo la vida que te hace atractivo\nModulo 8: Relaciones — como elegir y ser elegido',
+      bonuses: 'BONUS 1: Comunidad masculina privada (val. $47)\nBONUS 2: Guia de ejercicios de confianza progresivos (val. $27)\nBONUS 3: Sesion grupal quincenal en vivo (val. $37)',
+      garantia: 'Garantia 30 dias. Si aplicas el metodo durante 30 dias y no sientes un cambio real en tu confianza y tus interacciones, devolucion total sin preguntas.',
+      bullets: '✅ No es teoria — es un entrenamiento practico con ejercicios reales\n✅ Comunidad de hombres que se apoyan mutuamente en el proceso\n✅ El unico metodo que trabaja la raiz del problema, no los sintomas\n✅ Resultados documentados en menos de 30 dias de practica\n✅ Aplica tanto si buscas pareja como si quieres mejorar todas tus relaciones'
+    },
+    high: {
+      nombre: 'Inner Circle — Programa VIP de Transformacion Masculina',
+      tagline: 'Mentoría grupal intensiva de 3 meses con coaching real y seguimiento',
+      promesa: 'El programa de elite donde en 3 meses de mentoria intensiva transformas tu mentalidad, tu presencia y tu vida social — con un grupo reducido de hombres comprometidos y un coach que rinde cuentas por tus resultados.',
+      precio: '$197', precioOG: '$397',
+      modulos: 'Programa intensivo 3 meses — grupo maximo 15 personas\n\nSemanas 1-4: Diagnostico profundo y reprogramacion de creencias\nSemanas 5-8: Entrenamiento social activo con feedback en vivo\nSemanas 9-12: Instalacion de habitos y estilo de vida de alto valor\n\nInclye: Sesion grupal semanal en vivo\n2 sesiones de coaching individual\nAcceso al grupo privado 24/7',
+      bonuses: 'BONUS 1: Acceso de por vida al curso base (val. $67)\nBONUS 2: Material exclusivo de coaching avanzado (val. $97)',
+      garantia: 'Garantia de transformacion en 30 dias o devolucion total. Este programa no es para todos — pero si sos el tipo correcto, los resultados son garantizados.',
+      bullets: '✅ Grupo reducido — atencion real, no masiva\n✅ Coach disponible para consultas en el grupo privado todos los dias\n✅ Entrenamiento social en vivo con situaciones reales analizadas\n✅ Comunidad de hombres de alto nivel que se potencian mutuamente\n✅ Transformacion profunda — no cambios superficiales de 30 dias'
+    }
+  },
+  idiomas: {
+    low: {
+      nombre: 'Ingles en 21 Dias — El Arranque Sin Excusas',
+      tagline: 'Las 300 palabras y frases que cubren el 80% de las conversaciones reales',
+      promesa: 'En 21 dias aprenderás las 300 palabras y expresiones que te permiten tener una conversacion basica en ingles — de cero absoluto a poder comunicarte, sin memorizar listas aburridas.',
+      precio: '$27', precioOG: '$57',
+      modulos: 'PDF + audios de pronunciacion\n\nDia 1-7: Presentaciones y conversacion basica\nDia 8-14: Situaciones de la vida real — trabajo, viajes, compras\nDia 15-21: Conversaciones completas con audio nativo',
+      bonuses: 'BONUS 1: App recomendada + rutina diaria de 15 minutos (val. $9)\nBONUS 2: Guia de pronunciacion de los sonidos mas dificiles (val. $12)',
+      garantia: 'Garantia 30 dias. Si no ves progreso real, devolucion total.',
+      bullets: '✅ Solo 15 minutos al dia — cabe en cualquier rutina\n✅ Sin gramatica complicada al inicio — primero el habla, luego las reglas\n✅ Pronunciacion correcta desde el primer dia con audios nativos\n✅ Metodo probado con mas de 3,000 alumnos en LATAM'
+    },
+    med: {
+      nombre: 'Ingles Express 60 — Habla con Confianza en 2 Meses',
+      tagline: 'Del ingles basico al nivel conversacional en 60 dias de practica inteligente',
+      promesa: 'En 60 dias de practica guiada vas a pasar de entender poco y hablar con miedo a poder mantener conversaciones fluidas en ingles en situaciones de trabajo, viajes y vida cotidiana — con un metodo que prioriza el habla real sobre la gramatica.',
+      precio: '$57', precioOG: '$147',
+      modulos: 'Curso video + audios + comunidad de practica\n\nSemana 1-2: Fonologia — habla como nativo desde el dia 1\nSemana 3-4: Vocabulario activo de alta frecuencia\nSemana 5-6: Conversaciones reales — trabajo y vida social\nSemana 7-8: Nivel intermedio — reuniones, emails y presentaciones\n\nClases de practica oral en grupo 2 veces por semana',
+      bonuses: 'BONUS 1: Comunidad de practica conversacional (val. $37)\nBONUS 2: 4 clases de conversacion en grupo en vivo (val. $47)\nBONUS 3: Guia de ingles para trabajo remoto (val. $27)',
+      garantia: 'Garantia 30 dias. Si practicas 15 minutos al dia y no notas mejora, devolucion total.',
+      bullets: '✅ Practica oral real desde el primer dia — no solo escuchar\n✅ Comunidad activa para practicar con otros alumnos\n✅ Nivel laboral en 60 dias — para trabajo remoto y entrevistas en ingles\n✅ Acceso de por vida al material y actualizaciones'
+    },
+    high: {
+      nombre: 'Fluency Accelerator — Mentoria de Ingles en 90 Dias',
+      tagline: 'Clases privadas + plan personalizado + garantia de nivel B2',
+      promesa: 'En 90 dias con nuestro programa de mentoria personalizada llegaras al nivel B2 del Marco Europeo — el nivel que abre puertas a trabajos remotos internacionales — con clases individuales, plan a medida y seguimiento continuo.',
+      precio: '$247', precioOG: '$497',
+      modulos: 'Programa 90 dias con tutor dedicado\n\nEvaluacion inicial + plan personalizado segun tu nivel\n24 clases individuales de 45 minutos con tutor nativo\nPlan de estudio diario adaptado a tu tiempo y objetivos\nAcceso ilimitado al material base + cursos complementarios\nPrueba de nivel certificada al finalizar',
+      bonuses: 'BONUS 1: Preparacion para entrevistas en ingles (val. $97)\nBONUS 2: Acceso de por vida a la comunidad y material (val. $147)',
+      garantia: 'Garantia de nivel: si al finalizar no alcanzas el nivel B2 en la evaluacion, continuamos las clases sin costo adicional hasta que lo logres.',
+      bullets: '✅ Tutor dedicado que conoce exactamente en que sos fuerte y debil\n✅ Clases adaptadas 100% a tu horario y objetivos\n✅ Nivel B2 certificado — el que piden los empleos remotos internacionales\n✅ El camino mas rapido para aumentar tu sueldo con el ingles'
+    }
+  },
+  espirit: {
+    low: {
+      nombre: 'Tarot del Comienzo — Lectura e Interpretacion para Principiantes',
+      tagline: 'Lee tus propias cartas en menos de 7 dias aunque nunca lo hayas intentado',
+      promesa: 'Aprende a leer el Tarot Rider-Waite desde cero y en 7 dias poder hacer tu primera lectura completa para vos misma — sin memorizar los 78 significados, usando el metodo intuitivo que ensenan los lectores profesionales.',
+      precio: '$27', precioOG: '$67',
+      modulos: 'Ebook PDF + cartas de referencia rapida\n\nParte 1: La historia del Tarot y como funciona realmente\nParte 2: Los Arcanos Mayores — metodo de lectura intuitiva\nParte 3: Los Arcanos Menores simplificados\nParte 4: Tiradas basicas — Cruz Celta y tirada de 3 cartas\nParte 5: Tu primera lectura completa paso a paso',
+      bonuses: 'BONUS 1: Carta de referencia rapida imprimible (val. $9)\nBONUS 2: Guia de rituales de limpieza de mazo (val. $9)',
+      garantia: 'Garantia 30 dias. Si en 7 dias no podes hacer tu primera lectura, devolucion total.',
+      bullets: '✅ Sin memorizar — metodo intuitivo que desarrolla tu percepcion natural\n✅ Funciona con cualquier mazo Rider-Waite estandar\n✅ Primera lectura completa en menos de una semana\n✅ Miles de lectoras en LATAM ya usan este metodo'
+    },
+    med: {
+      nombre: 'Tarotista Profesional LATAM — Metodo Completo de Lectura e Interpretacion',
+      tagline: 'De principiante a lectora profesional que genera ingresos con el Tarot',
+      promesa: 'En 8 semanas dominarás los 78 arcanos, las 12 tiradas mas poderosas y los secretos de lectura que usan las tarotistas profesionales — y sabras exactamente como empezar a cobrar por tus lecturas y construir una clientela fiel.',
+      precio: '$67', precioOG: '$197',
+      modulos: 'Curso video 7 modulos + comunidad espiritual\n\nModulo 1: Historia, simbolismo y conexion con el Tarot\nModulo 2: Los 22 Arcanos Mayores — lectura profunda\nModulo 3: Los 56 Arcanos Menores — sistema rapido de lectura\nModulo 4: Las 12 tiradas mas usadas por profesionales\nModulo 5: Lectura combinada — el arte de la narracion\nModulo 6: Lectura para otros — etica, energia y proteccion\nModulo 7: Como cobrar por tus lecturas y conseguir clientes',
+      bonuses: 'BONUS 1: Comunidad de tarotistas LATAM (val. $47)\nBONUS 2: Guia de rituales y limpiezas avanzadas (val. $27)\nBONUS 3: Taller de lectura en vivo mensual (val. $37)\nBONUS 4: Guia de Tarot combinado con numerologia (val. $27)',
+      garantia: 'Garantia 30 dias. Si al mes no podes hacer lecturas fluidas, devolucion total.',
+      bullets: '✅ De cero a lectora profesional en 8 semanas\n✅ El unico curso que ensena a generar ingresos con el Tarot en LATAM\n✅ Comunidad espiritual activa para practica y consultas\n✅ Metodo probado por mas de 4,000 tarotistas en Argentina, Paraguay y Mexico\n✅ Incluye etica profesional y como manejar lecturas dificiles'
+    },
+    high: {
+      nombre: 'Academia Espiritual Elite — Programa de Iniciacion Completa',
+      tagline: 'Tarot avanzado + Numerologia + Astrologia + Mentoría personal de 6 meses',
+      promesa: 'El programa mas completo del mundo hispanohablante para dominar Tarot avanzado, Numerologia y Astrologia basica en 6 meses — con mentoria grupal semanal y la posibilidad de certificarte como consultora espiritual profesional.',
+      precio: '$197', precioOG: '$397',
+      modulos: 'Programa 6 meses — grupo reducido\n\nMeses 1-2: Tarot avanzado — tiradas complejas y psicologia del arcano\nMeses 3-4: Numerologia — cartas natales y ciclos de vida\nMeses 5-6: Astrologia basica aplicada a las consultas\n\nMentoria grupal semanal en vivo\nCertificado de Consultora Espiritual al finalizar\nComunidad privada de alto nivel',
+      bonuses: 'BONUS 1: Acceso de por vida al material (val. $197)\nBONUS 2: Sesion individual de revision de tu practica (val. $97)\nBONUS 3: Kit de marketing para consultoras espirituales (val. $67)',
+      garantia: 'Garantia 30 dias. Si en el primer mes no sientes que el programa transforma tu lectura, devolucion total.',
+      bullets: '✅ El unico programa que combina Tarot, Numerologia y Astrologia en LATAM\n✅ Certificado reconocido para ejercer como consultora profesional\n✅ Mentoria semanal con una maestra con 15 anos de experiencia\n✅ Red de consultoras espirituales que se recomiendan clientes\n✅ Material de por vida — accedes a todo para siempre'
+    }
+  }
+};
+
+// ─── GENERATE PRODUCT ───
+let currentTicketLevel = 'med';
+
+function generarProducto() {
+  const base = document.getElementById('gp-base').value;
+  if (!base) { alert('Primero seleccioná un producto en Ideas de Productos'); return; }
+  
+  // Detect nicho from product name
+  let nicho = 'salud';
+  const nichoMap = [
+    ['Dieta','salud'],['Glucosa','salud'],['Ayuno','salud'],
+    ['Inversi','finanzas'],['Ahorro','finanzas'],
+    ['IA','negocios'],['Dropshipping','negocios'],
+    ['Seducci','relaciones'],['Relaci','relaciones'],['Alpha','relaciones'],
+    ['Ingl','idiomas'],
+    ['Tarot','espirit'],['Manifest','espirit']
+  ];
+  for (const [key, val] of nichoMap) {
+    if (base.includes(key)) { nicho = val; break; }
+  }
+  
+  const data = productDB[nicho]?.[currentTicketLevel];
+  if (!data) return;
+  
+  generatedProduct = { ...data, nicho, ticket: currentTicketLevel, base };
+  
+  const levelLabels = { low: 'LOW TICKET', med: 'MEDIUM TICKET', high: 'HIGH TICKET' };
+  document.getElementById('gp-nivel-label').textContent = levelLabels[currentTicketLevel];
+  document.getElementById('gp-nombre').textContent = data.nombre;
+  document.getElementById('gp-tagline').textContent = data.tagline;
+  document.getElementById('gp-promesa').textContent = data.promesa;
+  document.getElementById('gp-precio').textContent = data.precio + ' USD  |  Precio original: ' + data.precioOG;
+  document.getElementById('gp-modulos').textContent = data.modulos;
+  document.getElementById('gp-bonuses').textContent = data.bonuses;
+  document.getElementById('gp-garantia').textContent = data.garantia;
+  document.getElementById('gp-bullets').textContent = data.bullets;
+  document.getElementById('gp-resultado').style.display = 'block';
+  document.getElementById('gp-resultado').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function setTicket(btn, level) {
+  currentTicketLevel = level;
+  ['btn-low','btn-med','btn-high'].forEach(id => {
+    const b = document.getElementById(id);
+    if (!b) return;
+    b.style.background = 'transparent';
+    b.style.color = 'var(--text2)';
+    b.style.border = '1px solid var(--border2)';
+  });
+  btn.style.background = 'linear-gradient(135deg,var(--accent),var(--accent2))';
+  btn.style.color = '#fff';
+  btn.style.border = 'none';
+}
+
+function copyGP() {
+  const d = generatedProduct;
+  if (!d.nombre) return;
+  const text = `PRODUCTO: ${d.nombre}\nTAGLINE: ${d.tagline}\nPROMESA: ${d.promesa}\nPRECIO: ${d.precio}\n\nMODULOS:\n${d.modulos}\n\nBONUSES:\n${d.bonuses}\n\nGARANTIA:\n${d.garantia}\n\nBULLETS DE VENTA:\n${d.bullets}`;
+  navigator.clipboard.writeText(text).catch(()=>{});
+  event.target.textContent = '✓ Copiado!';
+  setTimeout(() => event.target.textContent = 'Copiar producto completo', 2000);
+}
+
+function sendToLovable() {
+  const d = generatedProduct;
+  document.getElementById('lv-nombre').value = d.nombre || '';
+  document.getElementById('lv-tagline').value = d.tagline || '';
+  document.getElementById('lv-promesa').value = d.promesa || '';
+  // Navigate to lovable page
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-lovable').classList.add('active');
+  document.querySelector('[data-page="lovable"]').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+// ─── UPSELLS DATA ───
+const upsellDB = {
+  salud: [
+    { tipo: 'ORDER BUMP', nombre: 'Recetario Keto Exprés — 25 recetas listas en menos de 15 min', precio: '$17', precioOG: '$47', conv: '30%', desc: 'El complemento perfecto al producto principal. Se activa como checkbox en el checkout de Hotmart. Aumenta el ticket sin fricción porque el cliente YA tiene la tarjeta en la mano.' },
+    { tipo: 'OTO 1', nombre: 'Plan de Ejercicio en Casa de 10 min — Sin Equipamiento', precio: '$37', precioOG: '$97', conv: '22%', desc: 'Aparece segundos después de la compra. Complemento natural: el cliente ya cuida su alimentación, ahora quiere acelerar los resultados con movimiento. El 22% convierte.' },
+    { tipo: 'OTO 2 / Downsell', nombre: 'Guía Rápida: Los 7 Errores que Frenan la Pérdida de Peso', precio: '$17', precioOG: '$37', conv: '15%', desc: 'Si rechaza el OTO1, se le ofrece esta versión más accesible. Precio irresistible, percepción de valor alta. Recupera ingresos que de otro modo se perderían.' },
+    { tipo: 'BACKEND (día 7)', nombre: 'Programa Elite 90 Días — Transformación VIP con Mentoría', precio: '$197', precioOG: '$397', conv: '8%', desc: 'Enviado por email/WhatsApp 7 días después de la compra. El cliente ya vio resultados iniciales y está listo para un compromiso mayor. Alta percepción de valor = alta conversión.' }
+  ],
+  finanzas: [
+    { tipo: 'ORDER BUMP', nombre: 'Planilla de Presupuesto y Seguimiento de Inversiones', precio: '$17', precioOG: '$37', conv: '28%', desc: 'Herramienta práctica que complementa inmediatamente el curso. En Excel y Google Sheets. Checkbox en checkout — casi nadie lo rechaza porque parece indispensable.' },
+    { tipo: 'OTO 1', nombre: 'Análisis de 3 Brokers Recomendados para Paraguay y LATAM', precio: '$37', precioOG: '$77', conv: '20%', desc: 'Justo después de pagar, el cliente necesita saber dónde abrir su cuenta. Este OTO resuelve esa duda inmediata. El timing perfecto genera alta conversión.' },
+    { tipo: 'OTO 2 / Downsell', nombre: 'Mini Curso: Primeras 5 Inversiones Seguras en LATAM', precio: '$17', precioOG: '$47', conv: '13%', desc: 'Alternativa accesible al OTO1. Muy específico y accionable. Convierte bien porque resuelve el miedo principal: "¿por dónde empiezo?"' },
+    { tipo: 'BACKEND (día 10)', nombre: 'Mastermind de Inversores — Acceso 6 Meses', precio: '$247', precioOG: '$497', conv: '6%', desc: 'Para quienes ya dieron sus primeros pasos y quieren acelerar. Grupo reducido con mentor activo. El 6% que convierte genera un ingreso significativo adicional.' }
+  ],
+  negocios: [
+    { tipo: 'ORDER BUMP', nombre: 'Pack 50 Prompts de ChatGPT para Servicios que se Venden', precio: '$17', precioOG: '$47', conv: '35%', desc: 'Herramienta práctica que el cliente puede usar desde el primer día. Complemento tan obvio que el 35% lo agrega al carrito sin dudar.' },
+    { tipo: 'OTO 1', nombre: 'Guía de Captación de Clientes por LinkedIn en 30 días', precio: '$47', precioOG: '$97', conv: '25%', desc: 'Justo después de aprender el modelo de negocio, el cliente necesita clientes. Este OTO entrega el sistema de captación. Timing perfecto = máxima conversión.' },
+    { tipo: 'OTO 2 / Downsell', nombre: 'Scripts de WhatsApp para Cerrar Ventas de Servicios', precio: '$17', precioOG: '$37', conv: '18%', desc: 'La objeción más común en servicios es no saber cómo cerrar. Este OTO la elimina de forma asequible. Alta tasa de conversión por precio y utilidad inmediata.' },
+    { tipo: 'BACKEND (día 7)', nombre: 'Mastermind Agencia IA — 4 Meses de Implementación Supervisada', precio: '$297', precioOG: '$597', conv: '7%', desc: 'Para quienes quieren ir de 0 a $2K/mes con soporte real. El 7% que invierte en esto genera más revenue que todos los otros niveles combinados.' }
+  ],
+  relaciones: [
+    { tipo: 'ORDER BUMP', nombre: 'Pack 30 Openers Probados para Instagram, WhatsApp y Tinder', precio: '$17', precioOG: '$37', conv: '32%', desc: 'Complemento inmediato y práctico. El cliente acaba de aprender el método y quiere ejemplos reales para usar hoy. Conversión altísima.' },
+    { tipo: 'OTO 1', nombre: 'La Primera Cita Perfecta — Sistema Paso a Paso', precio: '$37', precioOG: '$77', conv: '22%', desc: 'Continuación lógica: si el método funciona, el cliente va a conseguir citas. Este OTO le dice qué hacer cuando eso pase. Necesidad creada por el producto base.' },
+    { tipo: 'OTO 2 / Downsell', nombre: 'Guía de Lenguaje Corporal que Atrae', precio: '$17', precioOG: '$37', conv: '16%', desc: 'Alternativa más accesible. El lenguaje corporal es el complemento más buscado junto con la comunicación verbal. Convierte muy bien como segunda opción.' },
+    { tipo: 'BACKEND (día 14)', nombre: 'Inner Circle — Programa VIP de Transformación Masculina 3 Meses', precio: '$197', precioOG: '$397', conv: '9%', desc: 'Para hombres que quieren un cambio profundo real con soporte de coach. Se vende bien a quienes ya están aplicando el método base y quieren acelerar.' }
+  ],
+  idiomas: [
+    { tipo: 'ORDER BUMP', nombre: 'Guía de Pronunciación de los 40 Sonidos Más Difíciles del Inglés', precio: '$12', precioOG: '$27', conv: '38%', desc: 'El miedo más grande de los estudiantes de inglés es la pronunciación. Precio muy bajo = casi nadie lo rechaza. Conversión récord.' },
+    { tipo: 'OTO 1', nombre: '4 Clases de Conversación Grupal en Vivo (1 mes)', precio: '$37', precioOG: '$77', conv: '20%', desc: 'Practica oral real con otros alumnos y un tutor. El paso natural después de estudiar el material. Alta percepción de valor = buena conversión.' },
+    { tipo: 'OTO 2 / Downsell', nombre: 'Inglés para Entrevistas de Trabajo Remoto', precio: '$17', precioOG: '$37', conv: '15%', desc: 'El objetivo final de muchos estudiantes. Precio accesible, utilidad concreta. Conversión sólida como segunda opción.' },
+    { tipo: 'BACKEND (día 10)', nombre: 'Mentoría de Inglés 90 Días — Nivel B2 Garantizado', precio: '$247', precioOG: '$497', conv: '5%', desc: 'Para quienes quieren certeza de resultado. La garantía de nivel B2 es el argumento definitivo para quienes están comprometidos.' }
+  ],
+  espirit: [
+    { tipo: 'ORDER BUMP', nombre: 'Carta de Referencia Rápida de los 78 Arcanos (Imprimible)', precio: '$12', precioOG: '$27', conv: '40%', desc: 'Herramienta física imprimible. Precio irresistible. El 40% lo agrega porque lo ve como completamente necesario para practicar.' },
+    { tipo: 'OTO 1', nombre: 'Taller en Vivo: Tu Primera Lectura Supervisada', precio: '$37', precioOG: '$77', conv: '24%', desc: 'Práctica real con una instructora mirando. Elimina el miedo a equivocarse. El 24% que lo toma acelera su aprendizaje enormemente.' },
+    { tipo: 'OTO 2 / Downsell', nombre: 'Guía de Rituales de Limpieza y Protección Energética', precio: '$17', precioOG: '$37', conv: '18%', desc: 'Complemento espiritual muy buscado. Precio bajo, valor percibido alto. Se vende solo porque el público de espiritualidad siempre quiere más rituales.' },
+    { tipo: 'BACKEND (día 7)', nombre: 'Academia Espiritual Elite — Tarot + Numerología + Astrología', precio: '$197', precioOG: '$397', conv: '10%', desc: 'El público espiritual tiene altísimo LTV. El 10% que hace el upgrade genera el mayor revenue del funnel. Importante nutrir esta audiencia con contenido de valor antes del pitch.' }
+  ]
+};
+
+function generarUpsells() {
+  const nicho = document.getElementById('us-nicho').value;
+  const data = upsellDB[nicho];
+  const nichoLabels = {salud:'Salud',finanzas:'Finanzas',negocios:'Negocios IA',relaciones:'Relaciones',idiomas:'Idiomas',espirit:'Espiritualidad'};
+  document.getElementById('us-nicho-label').textContent = nichoLabels[nicho];
+  
+  const colores = { 'ORDER BUMP': 'var(--accent3)', 'OTO 1': 'var(--accent2)', 'OTO 2 / Downsell': 'var(--accent)', 'BACKEND (día 7)': '#a855f7', 'BACKEND (día 10)': '#a855f7', 'BACKEND (día 14)': '#a855f7' };
+  
+  const container = document.getElementById('us-cards');
+  container.innerHTML = '';
+  data.forEach(item => {
+    const color = colores[item.tipo] || 'var(--accent)';
+    container.innerHTML += `
+      <div class="card" style="border-left:3px solid ${color}">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
+          <div>
+            <span style="font-size:10px;font-weight:700;color:${color};text-transform:uppercase;letter-spacing:1px">${item.tipo}</span>
+            <div style="font-family:var(--font-h);font-size:15px;font-weight:700;margin-top:4px">${item.nombre}</div>
+          </div>
+          <div style="text-align:right;flex-shrink:0">
+            <div style="font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--success)">${item.precio}</div>
+            <div style="font-size:11px;color:var(--text2);text-decoration:line-through">${item.precioOG}</div>
+            <span class="badge badge-green" style="margin-top:4px">Conv. ~${item.conv}</span>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6">${item.desc}</div>
+      </div>`;
+  });
+  
+  document.getElementById('us-stack-resultado').style.display = 'block';
+  calcTicketStack();
+}
+
+function calcTicketStack() {
+  const base = +document.getElementById('us-precio').value || 67;
+  const nicho = document.getElementById('us-nicho').value;
+  const data = upsellDB[nicho] || upsellDB.salud;
+  
+  // Calculate weighted average extra revenue per sale
+  let extra = 0;
+  data.forEach(item => {
+    const p = parseFloat(item.precio.replace('$',''));
+    const c = parseFloat(item.conv) / 100;
+    extra += p * c;
+  });
+  
+  document.getElementById('ts-base').textContent = '$' + base;
+  document.getElementById('ts-total').textContent = '$' + Math.round(base + extra);
+  document.getElementById('ts-extra').textContent = '+$' + Math.round(extra * 100).toLocaleString();
+}
+
+// ─── LOVABLE PROMPT GENERATOR ───
+const colorMap = {
+  naranja: { hex: '#FF6B35', accent: '#FF9F1C', dark: '#1A0A00', name: 'naranja energético' },
+  azul:    { hex: '#1A3A6B', accent: '#2E5CB8', dark: '#0A0F1A', name: 'azul corporativo' },
+  verde:   { hex: '#2E7D32', accent: '#4CAF50', dark: '#0A1A0A', name: 'verde natural' },
+  morado:  { hex: '#6B35A0', accent: '#A855F7', dark: '#0F0A1A', name: 'morado espiritual' },
+  rojo:    { hex: '#C0392B', accent: '#E74C3C', dark: '#1A0500', name: 'rojo intenso' }
+};
+
+const faqDB = {
+  salud: ['¿Necesito experiencia previa para seguir el programa?','¿Funciona si tengo problemas de salud o diabetes?','¿Qué pasa si no consigo algunos ingredientes?','¿Cuánto tiempo al día necesito dedicarle?','¿Qué diferencia este método de otras dietas que ya probé?'],
+  finanzas: ['¿Necesito dinero previo para empezar a invertir?','¿Es seguro invertir desde Paraguay o LATAM?','¿Qué pasa si pierdo dinero siguiendo el método?','¿Cuánto tiempo por día necesito para gestionar inversiones?','¿Este método funciona con ingresos bajos?'],
+  negocios: ['¿Necesito experiencia técnica o en marketing?','¿Cuánto dinero necesito para empezar mi agencia?','¿En cuánto tiempo puedo conseguir mi primer cliente?','¿Qué herramientas de IA se usan y cuánto cuestan?','¿Puedo hacer esto siendo empleado en relación de dependencia?'],
+  relaciones: ['¿Funciona si soy introvertido o muy tímido?','¿Aplica para conseguir pareja o solo para citas?','¿Qué pasa si ya lo intenté todo antes?','¿Es manipulación o seducción natural?','¿Cuánto tiempo tarda en verse resultados?'],
+  idiomas: ['¿Cuánto tiempo al día necesito para avanzar?','¿Funciona si ya intenté aprender inglés antes sin éxito?','¿Qué nivel de inglés voy a tener al terminar?','¿Necesito conocimientos previos de gramática?','¿Puedo usar este método siendo adulto mayor?'],
+  espirit: ['¿Necesito ser psíquico para leer el Tarot?','¿Con qué mazo de cartas funciona este método?','¿Es peligroso el Tarot desde la perspectiva espiritual?','¿Puedo cobrar por lecturas aunque sea principiante?','¿Cuánto tiempo necesito estudiar antes de hacer mi primera lectura?']
+};
+
+const testimoniosDB = {
+  salud: [
+    { nombre: 'Mariana R.', ciudad: 'Asunción, PY', texto: 'No lo podía creer. En las primeras dos semanas bajé 4 kilos sin pasar hambre. El plan de comidas adaptado a lo que conseguimos acá marcó toda la diferencia.', resultado: '-8 kg en 6 semanas' },
+    { nombre: 'Claudia M.', ciudad: 'Córdoba, AR', texto: 'Probé mil dietas y ninguna duró. Esta es la primera vez que llevo más de 2 meses sin romper el plan porque no me cuesta seguirlo.', resultado: '-11 kg en 10 semanas' },
+    { nombre: 'Patricia S.', ciudad: 'Lima, PE', texto: 'Mi glucosa bajó de 180 a 110 en 45 días. Mi médico no lo podía creer. Este programa literalmente me salvó la salud.', resultado: 'Glucosa normalizada + -7 kg' }
+  ],
+  finanzas: [
+    { nombre: 'Diego F.', ciudad: 'Asunción, PY', texto: 'Empecé con $200 y hoy tengo un portafolio de $1,800. Nunca pensé que iba a poder invertir desde Paraguay pero es más fácil de lo que imaginaba.', resultado: 'Portafolio x9 en 8 meses' },
+    { nombre: 'Sebastián L.', ciudad: 'Buenos Aires, AR', texto: 'Tenía todo el dinero en el banco comiendo inflación. Ahora tengo CEDEARs, algo de cripto y un fondo. El método es claro, práctico y sin paja.', resultado: 'Primer portafolio diversificado' },
+    { nombre: 'Carolina V.', ciudad: 'Bogotá, CO', texto: 'Soy ama de casa y pensé que las inversiones eran para gente con mucha plata. El curso me mostró que puedo empezar con lo que tengo y crecer despacio pero seguro.', resultado: 'Primera inversión en 2 semanas' }
+  ],
+  negocios: [
+    { nombre: 'Andrés T.', ciudad: 'Asunción, PY', texto: 'En el mes 2 ya tenía 3 clientes que me pagan $300 USD cada uno. Lo mejor es que trabajo desde mi casa con el teléfono y una computadora básica.', resultado: '$900/mes en el mes 2' },
+    { nombre: 'Valentina C.', ciudad: 'Mendoza, AR', texto: 'Era empleada y tenía miedo de emprender. El sistema es tan claro que en 6 semanas conseguí mi primer cliente y en el mes 3 igualé mi sueldo.', resultado: 'Igualó su sueldo en 90 días' },
+    { nombre: 'Marcos H.', ciudad: 'Santiago, CL', texto: 'Ofrezco copywriting con IA y ya tengo 5 clientes recurrentes. Lo que antes me tomaba 8 horas ahora lo hago en 40 minutos. La rentabilidad es bestial.', resultado: '$2,100/mes a los 4 meses' }
+  ],
+  relaciones: [
+    { nombre: 'Rodrigo P.', ciudad: 'Asunción, PY', texto: 'Llevaba 3 años sin salir con nadie. Apliqué el método durante 3 semanas y tuve 4 citas. No es magia, es un sistema que funciona si lo seguís.', resultado: '4 citas en 3 semanas' },
+    { nombre: 'Gabriel M.', ciudad: 'Montevideo, UY', texto: 'El módulo de lenguaje corporal me cambió la vida. Ni siquiera trabajo en la app, simplemente cambiando cómo me muevo y hablo la gente me percibe diferente.', resultado: 'Pareja estable a los 45 días' },
+    { nombre: 'Luis A.', ciudad: 'Medellín, CO', texto: 'Soy introvertido total. Pensé que este programa no era para mí. Pero el método funciona exactamente para personalidades como la mía. Los resultados me sorprendieron.', resultado: 'Primera relación en 2 años' }
+  ],
+  idiomas: [
+    { nombre: 'Fernanda B.', ciudad: 'Asunción, PY', texto: 'En 60 días pasé de entender el 30% de las series en inglés a entender casi todo sin subtítulos. Mi jefe me asignó el proyecto con el cliente de EEUU y lo manejé sola.', resultado: 'Nivel conversacional en 60 días' },
+    { nombre: 'Nicolás R.', ciudad: 'Lima, PE', texto: 'Conseguí el trabajo remoto que quería. El curso me preparó específicamente para las entrevistas en inglés y pasé las 3 rondas sin problema.', resultado: 'Trabajo remoto conseguido' },
+    { nombre: 'Camila T.', ciudad: 'Rosario, AR', texto: 'Intenté aprender inglés 4 veces antes. Esta es la primera metodología que realmente prioriza el habla. En 3 semanas ya estaba teniendo conversaciones básicas.', resultado: 'Primera conversación fluida semana 3' }
+  ],
+  espirit: [
+    { nombre: 'Graciela M.', ciudad: 'Asunción, PY', texto: 'En 7 días hice mi primera lectura para mi hermana y no podía creer lo que sentí. El método intuitivo es completamente diferente a memorizar significados.', resultado: 'Primera lectura en 7 días' },
+    { nombre: 'Soledad V.', ciudad: 'Mendoza, AR', texto: 'Llevo 6 meses haciendo lecturas profesionales y ya tengo lista de espera de 2 semanas. Lo que aprendí aquí me permitió cobrar desde el primer mes.', resultado: 'Lista de espera en 6 meses' },
+    { nombre: 'Patricia H.', ciudad: 'Ciudad de México, MX', texto: 'Nunca creí que podría leer el Tarot. Ahora hago 3 a 4 consultas por semana y es mi ingreso principal. Este curso cambió mi vida económica y espiritual.', resultado: 'Ingreso principal en 4 meses' }
+  ]
+};
+
+function generarPromptLovable() {
+  const nombre = document.getElementById('lv-nombre').value || 'Mi Producto Digital';
+  const tagline = document.getElementById('lv-tagline').value || 'Subtítulo de venta';
+  const promesa = document.getElementById('lv-promesa').value || 'Tu promesa principal aquí';
+  const avatar = document.getElementById('lv-avatar').value || 'Persona en LATAM';
+  const precio = document.getElementById('lv-precio').value || '$67';
+  const precioOG = document.getElementById('lv-precio-og').value || '$197';
+  const colorKey = document.getElementById('lv-color').value || 'naranja';
+  const checkout = document.getElementById('lv-checkout').value || 'https://pay.hotmart.com/TU_PRODUCTO';
+  const pixel = document.getElementById('lv-pixel').value || 'TU_PIXEL_ID';
+  const nicho = document.getElementById('lv-nicho') ? document.getElementById('lv-nicho').value : 'salud';
+  
+  const col = colorMap[colorKey];
+  const faqs = faqDB[nicho] || faqDB.salud;
+  const testimonios = testimoniosDB[nicho] || testimoniosDB.salud;
+  
+  const prompt = `Eres un experto en diseño de landing pages de alta conversión para info-productos digitales vendidos en Hotmart para audiencias de América Latina.
+
+Crea una landing page de venta completa, profesional y optimizada para conversión máxima en React + Tailwind CSS con las siguientes especificaciones técnicas y de contenido.
+
+═══════════════════════════════════════════
+DATOS DEL PRODUCTO
+═══════════════════════════════════════════
+
+Nombre del producto: ${nombre}
+Tagline: ${tagline}
+Promesa principal: ${promesa}
+Avatar / cliente ideal: ${avatar}
+Precio actual: ${precio} USD
+Precio tachado (original): ${precioOG} USD
+URL de checkout: ${checkout}
+ID Pixel Meta: ${pixel}
+
+═══════════════════════════════════════════
+DISEÑO Y PALETA DE COLORES
+═══════════════════════════════════════════
+
+Color primario: ${col.hex} (${col.name})
+Color de acento: ${col.accent}
+Fondo principal: #FFFFFF (blanco puro)
+Fondo secundario: #F8F9FA
+Texto principal: #1A1A2E
+Texto secundario: #6B7280
+Color éxito / CTA principal: ${col.hex}
+Tipografía headline: Font Inter o Poppins, peso 700-900
+Tipografía cuerpo: Font Inter, peso 400-500
+Estética: moderna, limpia, orientada a resultados, sin exceso de ornamentación
+Diseño MOBILE-FIRST absoluto (80% del tráfico es desde celular en LATAM)
+
+═══════════════════════════════════════════
+ESTRUCTURA COMPLETA DE SECCIONES
+═══════════════════════════════════════════
+
+SECCIÓN 1 — BARRA DE URGENCIA (sticky top)
+- Franja de 40px de altura con fondo ${col.hex}
+- Texto: "🔥 OFERTA DE LANZAMIENTO: ${precio} USD — Solo por tiempo limitado"
+- No incluir menú de navegación. Sin links. Sin botones en la barra.
+
+SECCIÓN 2 — HERO (primera pantalla, arriba del fold)
+- Headline principal en H1 grande (52px desktop, 32px mobile, peso 900):
+  "${promesa}"
+- Subheadline (22px, peso 400, color #4B5563):
+  "${tagline}"
+- Imagen o ilustración de alta calidad a la derecha (en desktop) o debajo del texto (en mobile)
+- Botón CTA principal: grande, color ${col.hex}, texto "QUIERO ACCEDER AHORA — ${precio}" con flecha →
+- Debajo del botón: texto pequeño en verde "✓ Garantía 30 días sin preguntas  ✓ Acceso inmediato  ✓ Pagás solo una vez"
+- Indicador de urgencia: pequeño contador de "Solo X cupos disponibles a este precio"
+- En mobile: botón sticky en la parte inferior de la pantalla (fixed bottom) que dice "ACCEDER AHORA — ${precio}"
+
+SECCIÓN 3 — PRUEBA SOCIAL RÁPIDA (justo debajo del hero)
+- Franja de fondo ${col.hex}15 (muy suave)
+- 3 números de impacto en grande: "+5,000 alumnos" | "4.9/5 estrellas" | "97% tasa de satisfacción"
+- Diseño horizontal en desktop, vertical en mobile
+
+SECCIÓN 4 — EL PROBLEMA (agitación emocional)
+- Título H2: "¿Te identificás con alguna de estas situaciones?"
+- Lista de 5 a 6 bullets con emoji ❌ describiendo el dolor del avatar (${avatar})
+- Al final: texto puente "Si dijiste que sí a alguna de estas situaciones, este programa fue diseñado exactamente para vos."
+- Fondo ligeramente diferente (#F8F9FA) para separar visualmente
+
+SECCIÓN 5 — LA SOLUCIÓN / EL MÉTODO
+- Título H2: "Presentamos ${nombre}"
+- Párrafo de introducción al método (3-4 líneas)
+- 3 pilares del método en cards horizontales, cada uno con ícono SVG, título y descripción de 2 líneas
+
+SECCIÓN 6 — MÓDULOS / CONTENIDO DEL PROGRAMA
+- Título H2: "Todo lo que incluye el programa"
+- Grid de módulos en cards (2 columnas en desktop, 1 en mobile)
+- Cada card: número de módulo, título en negrita, descripción corta de 1-2 líneas
+- Diseño de acordeón expandible en mobile para no saturar la pantalla
+- Al final de la sección: total de valor percibido "Valor total real: ${precioOG} USD"
+
+SECCIÓN 7 — TESTIMONIOS
+- Título H2: "Lo que dicen quienes ya lo lograron"
+- 3 cards de testimonios con: foto de avatar circular (placeholder con iniciales), nombre, ciudad, testimonio, resultado destacado en badge verde
+- Testimonios a usar:
+  Testimonio 1: ${testimonios[0].nombre} de ${testimonios[0].ciudad} — "${testimonios[0].texto}" — Resultado: ${testimonios[0].resultado}
+  Testimonio 2: ${testimonios[1].nombre} de ${testimonios[1].ciudad} — "${testimonios[1].texto}" — Resultado: ${testimonios[1].resultado}
+  Testimonio 3: ${testimonios[2].nombre} de ${testimonios[2].ciudad} — "${testimonios[2].texto}" — Resultado: ${testimonios[2].resultado}
+
+SECCIÓN 8 — STACK DE VALOR Y OFERTA
+- Título H2: "Todo lo que recibís hoy"
+- Lista detallada de lo que incluye el producto con precio de valor de cada elemento
+- Precio original total tachado en grande: ~~${precioOG} USD~~
+- Flecha hacia abajo animada
+- Precio actual en ENORME y en ${col.hex}: ${precio} USD
+- Subtexto: "Pago único — Acceso de por vida — Sin suscripciones"
+- Botón CTA gigante: "SÍ, QUIERO EMPEZAR AHORA →"
+- Texto debajo: "Hacés clic → pagás de forma segura en Hotmart → accedés inmediatamente"
+
+SECCIÓN 9 — GARANTÍA
+- Caja con borde ${col.hex}, fondo blanco, bordes redondeados grandes
+- Ícono de escudo grande
+- Título: "Garantía Total de 30 Días — Riesgo Cero"
+- Texto: "Si en 30 días seguiste el método y no viste resultados, te devolvemos el 100% del dinero. Sin preguntas, sin formularios, sin excusas. Confiamos en el programa."
+- El riesgo es completamente nuestro.
+
+SECCIÓN 10 — FAQ
+- Título H2: "Preguntas frecuentes"
+- Acordeón interactivo con 5 preguntas y respuestas:
+  Q1: ${faqs[0]}
+  Q2: ${faqs[1]}
+  Q3: ${faqs[2]}
+  Q4: ${faqs[3]}
+  Q5: ${faqs[4]}
+- Respuestas cortas, directas, que eliminen la objeción con confianza
+
+SECCIÓN 11 — CTA FINAL URGENTE
+- Fondo oscuro (#1A1A2E)
+- Título en blanco: "El momento de actuar es ahora"
+- Contador regresivo de 24 horas en grande (implementado con JavaScript real)
+- Precio final con urgencia
+- Botón CTA en ${col.hex}: "QUIERO TRANSFORMAR MI VIDA — ${precio} USD"
+- Garantía resumida debajo
+
+SECCIÓN 12 — FOOTER
+- Fondo muy oscuro
+- Logo del producto
+- Links: Política de Privacidad | Términos y Condiciones | Contacto
+- Texto legal: "© 2025 ${nombre}. Todos los derechos reservados. Los resultados individuales pueden variar."
+- "Este producto se vende a través de Hotmart."
+
+═══════════════════════════════════════════
+IMPLEMENTACIÓN TÉCNICA OBLIGATORIA
+═══════════════════════════════════════════
+
+1. PIXEL META — Insertar en el <head> del index.html:
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,window.document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${pixel}');
+fbq('track', 'PageView');
+</script>
+
+2. EVENTO ViewContent — Disparar cuando el usuario llega al 50% del scroll:
+fbq('track', 'ViewContent', {content_name: '${nombre}', currency: 'USD', value: ${precio.replace('$','')}});
+
+3. EVENTO InitiateCheckout — Disparar en TODOS los botones CTA:
+fbq('track', 'InitiateCheckout', {content_name: '${nombre}', currency: 'USD', value: ${precio.replace('$','')}});
+
+4. TODOS los botones CTA deben redirigir a: ${checkout}
+
+5. CONTADOR REGRESIVO — Implementar con JavaScript puro:
+- Se resetea cada 24 horas usando localStorage
+- Muestra: XX horas : XX minutos : XX segundos
+- Al llegar a 0 se reinicia automáticamente
+
+6. BOTÓN STICKY MOBILE — Visible todo el tiempo en mobile:
+- Fixed bottom: 0
+- Padding 16px
+- Full width
+- Mismo texto y link que el CTA principal
+
+7. NO incluir: menú de navegación, links externos, sidebar, nada que distraiga del CTA
+
+8. VELOCIDAD: Optimizar todas las imágenes, usar lazy loading, no importar librerías pesadas innecesarias
+
+═══════════════════════════════════════════
+CONSIDERACIONES ESPECIALES LATAM
+═══════════════════════════════════════════
+
+- Usar español neutro latinoamericano (no España)
+- Evitar términos muy formales o corporativos
+- El tono es cercano, directo y empático — como un amigo que te da un consejo
+- Mencionar "garantía" en múltiples puntos — genera confianza crítica en LATAM
+- El precio siempre en USD pero mencionar que se puede pagar en moneda local
+- Agregar cerca de los botones: "Pago 100% seguro 🔒 | Visa, Mastercard, PIX, PayPal"
+
+═══════════════════════════════════════════
+ENTREGABLE ESPERADO
+═══════════════════════════════════════════
+
+Genera una aplicación React completa con:
+- Un archivo App.jsx o index.jsx con toda la landing page
+- Usando Tailwind CSS para todos los estilos
+- Todo el JavaScript para el contador, scroll tracking y pixel integrado
+- Diseño completamente responsive mobile-first
+- Listo para desplegar directamente en Vercel sin configuración adicional`;
+
+  document.getElementById('lv-prompt-output').value = prompt;
+  document.getElementById('lv-resultado').style.display = 'block';
+  document.getElementById('lv-resultado').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function copyPrompt() {
+  const t = document.getElementById('lv-prompt-output').value;
+  navigator.clipboard.writeText(t).catch(()=>{});
+  event.target.textContent = '✓ Prompt copiado!';
+  setTimeout(() => event.target.textContent = 'Copiar prompt completo', 2000);
+}
+
 
 // ─── INIT ───
 window.addEventListener('load', () => {
