@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HotStudio LATAM — Creador de Productos Digitales</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--bg2:#111118;--bg3:#1a1a24;--bg4:#22222e;
+  --accent:#ff6b35;--accent2:#ff9f1c;--accent3:#2ec4b6;
+  --text:#f0f0f8;--text2:#8888a8;--text3:#55556a;
+  --border:#ffffff12;--border2:#ffffff22;
+  --success:#2ec4b6;--warn:#ff9f1c;--danger:#ff4757;
+  --font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;
+  --r:12px;--r2:8px;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-b);min-height:100vh;overflow-x:hidden}
+.app{display:flex;min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:240px;min-width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.logo-title{font-family:var(--font-h);font-size:18px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-sub{font-size:10px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.nav{padding:12px 0;flex:1}
+.nav-section{padding:8px 16px 4px;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;transition:all 0.15s;border-left:2px solid transparent;font-size:13px;color:var(--text2)}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--bg3);color:var(--accent);border-left-color:var(--accent)}
+.sidebar-footer{padding:12px 16px;border-top:1px solid var(--border)}
+.sidebar-badge{background:linear-gradient(135deg,#ff6b3530,#ff9f1c30);border:1px solid var(--border2);border-radius:6px;padding:8px 12px;font-size:11px;color:var(--accent2);font-weight:600;text-align:center}
+
+/* MAIN */
+.main{flex:1;overflow-y:auto;min-width:0}
+.page{display:none;padding:28px;animation:fadeIn 0.2s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.page-header{margin-bottom:24px}
+.page-title{font-family:var(--font-h);font-size:28px;font-weight:800}
+.page-sub{color:var(--text2);font-size:13px;margin-top:5px}
+
+/* CARDS */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px}
+.card-title{font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card-title .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gap-12{display:flex;flex-direction:column;gap:12px}
+.gap-16{display:flex;flex-direction:column;gap:16px}
+
+/* STATS */
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:14px}
+.stat-label{font-size:10px;color:var(--text2);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:5px;font-weight:600}
+.stat-value{font-family:var(--font-h);font-size:22px;font-weight:800}
+
+/* BADGES */
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:0.3px}
+.badge-green{background:#2ec4b620;color:#2ec4b6;border:1px solid #2ec4b640}
+.badge-orange{background:#ff9f1c20;color:#ff9f1c;border:1px solid #ff9f1c40}
+.badge-blue{background:#4ecdc420;color:#4ecdc4;border:1px solid #4ecdc440}
+.badge-red{background:#ff475720;color:#ff4757;border:1px solid #ff475740}
+.badge-purple{background:#a855f720;color:#d8a1ff;border:1px solid #a855f740}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:var(--r2);border:none;cursor:pointer;font-family:var(--font-b);font-size:13px;font-weight:600;transition:all 0.15s}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+.btn-primary:hover{opacity:0.9;transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text2);border:1px solid var(--border2)}
+.btn-outline:hover{background:var(--bg3);color:var(--text)}
+.btn-sm{padding:5px 12px;font-size:11px}
+
+/* INPUTS */
+.form-group{margin-bottom:14px}
+.form-label{font-size:10px;color:var(--text2);margin-bottom:5px;display:block;text-transform:uppercase;letter-spacing:0.5px;font-weight:700}
+.form-input{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r2);padding:9px 12px;color:var(--text);font-family:var(--font-b);font-size:13px;outline:none;transition:border 0.15s}
+.form-input:focus{border-color:var(--accent)}
+select.form-input option{background:var(--bg3);color:var(--text)}
+textarea.form-input{resize:vertical;min-height:80px;line-height:1.5}
+
+/* TABLES */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{text-align:left;padding:9px 12px;color:var(--text2);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;border-bottom:1px solid var(--border);font-weight:700}
+td{padding:9px 12px;border-bottom:1px solid var(--border)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg3)}
+
+/* TAGS */
+.tag{display:inline-block;padding:2px 8px;background:var(--bg4);border:1px solid var(--border);border-radius:4px;font-size:10px;color:var(--text2);margin:2px}
+
+/* PROGRESS */
+.progress-wrap{background:var(--bg4);border-radius:4px;height:6px;overflow:hidden;flex:1}
+.progress-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.4s}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:18px;gap:0}
+.tab{padding:9px 16px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text2);border-bottom:2px solid transparent;transition:all 0.15s}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ALERT */
+.alert{border-radius:var(--r2);padding:12px 16px;font-size:12px;border-left:3px solid;line-height:1.5}
+.alert-info{background:#4ecdc415;border-color:#4ecdc4;color:#4ecdc4}
+.alert-warn{background:#ff9f1c15;border-color:#ff9f1c;color:#ff9f1c}
+.alert-success{background:#2ec4b615;border-color:#2ec4b6;color:#2ec4b6}
+.alert-danger{background:#ff475715;border-color:#ff4757;color:#ff4757}
+
+/* FUNNEL STEPS */
+.funnel-step{display:flex;align-items:center;gap:12px;padding:12px;border-radius:var(--r2);background:var(--bg3);margin-bottom:8px}
+.funnel-num{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;font-family:var(--font-h)}
+
+/* PIXEL EVENT ROW */
+.pixel-row{display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--bg3);border-radius:var(--r2);border:1px solid var(--border)}
+
+/* CODE BLOCK */
+.code-block{background:var(--bg4);border:1px solid var(--border);border-radius:var(--r2);padding:14px;font-size:11px;color:var(--text2);font-family:'Courier New',monospace;overflow-x:auto;white-space:pre;line-height:1.6;position:relative;max-height:200px;overflow-y:auto}
+
+/* PRODUCT CARDS */
+.prod-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px;cursor:pointer;transition:all 0.2s;position:relative}
+.prod-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.prod-card.selected{border-color:var(--accent);background:var(--bg3)}
+.prod-card.selected::after{content:'✓';position:absolute;top:10px;right:10px;width:20px;height:20px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff;display:grid;place-items:center}
+
+/* SEPARATOR */
+.sep{border:none;border-top:1px solid var(--border);margin:14px 0}
+
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+@media(max-width:1100px){.grid-4{grid-template-columns:1fr 1fr}}
+@media(max-width:768px){
+  .sidebar{position:fixed;left:-240px;z-index:100;transition:left 0.3s}
+  .sidebar.open{left:0}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .page{padding:16px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="logo-title">HotStudio</div>
+    <div class="logo-sub">LATAM Digital Creator</div>
+  </div>
+  <div class="nav">
+    <div class="nav-section">Principal</div>
+    <div class="nav-item active" data-page="dashboard">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="5.5" height="5.5" rx="1"/><rect x="8.5" y="1" width="5.5" height="5.5" rx="1"/><rect x="1" y="8.5" width="5.5" height="5.5" rx="1"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1"/></svg>
+      Dashboard
+    </div>
+    <div class="nav-section">Productos</div>
+    <div class="nav-item" data-page="productos">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4l5.5-2L13 4v8l-5.5 2L2 12V4z"/><path d="M7.5 2v12M2 4l5.5 2 5.5-2"/></svg>
+      Ideas de Productos
+    </div>
+    <div class="nav-item" data-page="funnel">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 2h11L8.5 8v5l-2-1V8L2 2z"/></svg>
+      Funnel de Ventas
+    </div>
+    <div class="nav-item" data-page="copy">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="9" height="11" rx="1"/><path d="M4 1h8a1 1 0 011 1v11"/><path d="M3.5 6.5h5M3.5 9h4"/></svg>
+      Copy & VSL
+    </div>
+    <div class="nav-section">Meta Ads</div>
+    <div class="nav-item" data-page="meta">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M7.5 2c0 0-2.5 2.5-2.5 5.5s2.5 5.5 2.5 5.5M7.5 2c0 0 2.5 2.5 2.5 5.5s-2.5 5.5-2.5 5.5M2 7.5h11"/></svg>
+      Campañas Meta Ads
+    </div>
+    <div class="nav-item" data-page="pixel">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="4.5" height="4.5"/><rect x="9.5" y="1" width="4.5" height="4.5"/><rect x="1" y="9.5" width="4.5" height="4.5"/><rect x="9.5" y="9.5" width="4.5" height="4.5"/></svg>
+      Pixel & Eventos
+    </div>
+    <div class="nav-item" data-page="audiencias">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="5.5" cy="5" r="2.5"/><path d="M1 14c0-3 2-4.5 4.5-4.5"/><circle cx="11.5" cy="7.5" r="2"/><path d="M9 13.5c0-2 1-3 2.5-3s2.5 1 2.5 3"/></svg>
+      Audiencias LATAM
+    </div>
+    <div class="nav-section">Finanzas</div>
+    <div class="nav-item" data-page="calculadora">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="1" width="11" height="13" rx="1"/><path d="M5 4.5h5M5 7.5h2M5 10.5h2M9 7.5h1.5M9 10.5h1.5"/></svg>
+      Calculadora ROAS
+    </div>
+    <div class="nav-item" data-page="precios">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7.5" cy="7.5" r="5.5"/><path d="M7.5 4.5v1.2M7.5 9.3v1.2M5.5 6.5C5.5 5.7 6.4 5 7.5 5s2 .7 2 1.7-2 1.8-2 1.8-2 .8-2 1.8.9 1.7 2 1.7 2-.7 2-1.7"/></svg>
+      Precios & PYG/USD
+    </div>
+    <div class="nav-section">Lanzamiento</div>
+    <div class="nav-item" data-page="checklist">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 7.5l3 3 7-7"/><rect x="1" y="1" width="13" height="13" rx="2"/></svg>
+      Checklist Completo
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-badge">🔥 Paraguay · LATAM · 2025</div>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ============ DASHBOARD ============ -->
+<div class="page active" id="page-dashboard">
+  <div class="page-header">
+    <div class="page-title">Dashboard</div>
+    <div class="page-sub">Visión general de tu negocio digital — Hotmart + Meta Ads</div>
+  </div>
+
+  <div class="grid-4" style="margin-bottom:20px">
+    <div class="stat-card">
+      <div class="stat-label">Ingresos est. / mes</div>
+      <div class="stat-value" id="dash-ingresos" style="color:var(--accent)">$0</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px" id="dash-config-msg">Configura tu producto</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">ROAS objetivo LATAM</div>
+      <div class="stat-value" style="color:var(--accent3)">3.5x</div>
+      <div style="font-size:11px;color:var(--success);margin-top:4px">↑ Mínimo rentable</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Conv. rate promedio</div>
+      <div class="stat-value">2.5%</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px">Info-productos LATAM</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">CPC est. Paraguay</div>
+      <div class="stat-value" style="color:var(--accent2)">$0.18</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:4px">USD · Meta Ads 2025</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Estado del Proyecto</div>
+      <div class="gap-12">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px"><span>Producto elegido</span><span id="st-prod" style="color:var(--text2)">Pendiente</span></div>
+          <div class="progress-wrap"><div class="progress-bar" id="pb-1" style="width:0%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px"><span>Funnel configurado</span><span id="st-funnel" style="color:var(--text2)">Pendiente</span></div>
+          <div class="progress-wrap"><div class="progress-bar" id="pb-2" style="width:0%"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px"><span>Checklist completado</span><span id="st-check" style="color:var(--text2)">0%</span></div>
+          <div class="progress-wrap"><div class="progress-bar" id="pb-3" style="width:0%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Top Nichos en LATAM 2025</div>
+      <div class="gap-12">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px">💪 Salud & Adelgazamiento</span>
+          <span class="badge badge-green">Muy alta conv.</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px">💰 Finanzas & Inversión</span>
+          <span class="badge badge-green">Alta conv.</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px">🤖 Negocios con IA</span>
+          <span class="badge badge-orange">Explosivo 2025</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px">❤️ Relaciones & Seducción</span>
+          <span class="badge badge-orange">Evergreen</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:13px">🔮 Espiritualidad & Tarot</span>
+          <span class="badge badge-purple">Alto LTV</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span class="dot"></span>Ruta de lanzamiento — 5 pasos</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+      <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:var(--r2)">
+        <div style="font-size:22px;margin-bottom:6px">1️⃣</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Elige producto</div>
+        <div style="font-size:10px;color:var(--text2)">Nicho + audiencia clara</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:var(--r2)">
+        <div style="font-size:22px;margin-bottom:6px">2️⃣</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Construye funnel</div>
+        <div style="font-size:10px;color:var(--text2)">Landing + VSL + Upsell</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:var(--r2)">
+        <div style="font-size:22px;margin-bottom:6px">3️⃣</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Escribe copy</div>
+        <div style="font-size:10px;color:var(--text2)">PAS / AIDA / BAB</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:var(--r2)">
+        <div style="font-size:22px;margin-bottom:6px">4️⃣</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Configura Meta Ads</div>
+        <div style="font-size:10px;color:var(--text2)">CBO + Pixel + CAPI</div>
+      </div>
+      <div style="text-align:center;padding:14px;background:var(--bg3);border-radius:var(--r2)">
+        <div style="font-size:22px;margin-bottom:6px">5️⃣</div>
+        <div style="font-size:12px;font-weight:600;margin-bottom:4px">Lanza & optimiza</div>
+        <div style="font-size:10px;color:var(--text2)">ROAS 3.5x+ mínimo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-warn">
+    ⚡ <strong>Próximo paso:</strong> Dirígete a "Ideas de Productos" para elegir tu nicho y comenzar a estimar ingresos reales.
+  </div>
+</div>
+
+<!-- ============ PRODUCTOS ============ -->
+<div class="page" id="page-productos">
+  <div class="page-header">
+    <div class="page-title">Ideas de Productos Digitales</div>
+    <div class="page-sub">Productos con mayor tasa de conversión en LATAM — datos Hotmart 2024-2025</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px">
+
+    <div class="prod-card" onclick="selectProduct(this,'Dieta Cetogénica LATAM','Salud','$47–97','Muy Alta')">
+      <span class="badge badge-green" style="margin-bottom:8px">Muy Alta Conversión</span>
+      <div style="font-size:22px;margin-bottom:8px">🥑</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Dieta Cetogénica LATAM</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Recetas con ingredientes locales. Evergreen total. Mujeres 28-55.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Salud · Adelgazamiento</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$47–97</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Control de Glucosa Natural','Salud','$37–67','Alta')">
+      <span class="badge badge-green" style="margin-bottom:8px">Alta Conversión</span>
+      <div style="font-size:22px;margin-bottom:8px">🍬</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Control de Glucosa Natural</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Mercado masivo 35-65 años. Alta intención de compra. CPC bajo.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Salud · Diabetes tipo 2</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$37–67</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Ayuno Intermitente Express','Salud','$37–77','Muy Alta')">
+      <span class="badge badge-green" style="margin-bottom:8px">Muy Alta Conversión</span>
+      <div style="font-size:22px;margin-bottom:8px">⏱️</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Ayuno Intermitente Express</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">21 días de resultados. Método simple. Muy bajo CPC en LATAM.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Salud · Pérdida de peso</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$37–77</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Inversión desde Cero LATAM','Finanzas','$67–127','Muy Alta')">
+      <span class="badge badge-orange" style="margin-bottom:8px">Ticket Alto</span>
+      <div style="font-size:22px;margin-bottom:8px">📈</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Inversión desde Cero LATAM</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Criptos, acciones, ahorro inteligente. Boom post-pandemia en LATAM.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Finanzas · Inversión</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$67–127</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Negocio con IA sin Invertir','Negocios IA','$47–97','Explosiva 2025')">
+      <span class="badge badge-green" style="margin-bottom:8px">Tendencia Explosiva</span>
+      <div style="font-size:22px;margin-bottom:8px">🤖</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Negocio con IA sin Invertir</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Servicios con IA, automatización, freelance. Tendencia #1 de 2025.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Negocios · IA & Freelance</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$47–97</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Dropshipping LATAM Sin Stock','Negocios','$67–147','Alta')">
+      <span class="badge badge-orange" style="margin-bottom:8px">Ticket Alto</span>
+      <div style="font-size:22px;margin-bottom:8px">📦</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Dropshipping LATAM Sin Stock</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">E-commerce sin inversión. Audiencia emprendedora activa. Ticket alto.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Negocios · E-commerce</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$67–147</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Seducción Masculina 2.0','Relaciones','$37–77','Alta')">
+      <span class="badge badge-orange" style="margin-bottom:8px">Evergreen</span>
+      <div style="font-size:22px;margin-bottom:8px">❤️</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Seducción Masculina 2.0</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Autoconfianza, comunicación, citas. Nicho evergreen de alto volumen.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Relaciones · Hombres 20-40</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$37–77</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Inglés Express 60 Días','Idiomas','$27–57','Alta')">
+      <span class="badge badge-blue" style="margin-bottom:8px">Mercado Masivo</span>
+      <div style="font-size:22px;margin-bottom:8px">🗣️</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Inglés Express 60 Días</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Promesa clara con deadline. Muy buscado en Paraguay. Ticket bajo-medio.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Idiomas · Conversacional</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$27–57</span>
+      </div>
+    </div>
+
+    <div class="prod-card" onclick="selectProduct(this,'Tarot & Manifestación Digital','Espiritualidad','$27–67','Alta LTV')">
+      <span class="badge badge-purple" style="margin-bottom:8px">Alto LTV</span>
+      <div style="font-size:22px;margin-bottom:8px">🔮</div>
+      <div style="font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:4px">Tarot & Manifestación Digital</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:8px">Nicho rentable y subestimado en LATAM. Mujeres 30-60 con poder adquisitivo.</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:11px;color:var(--text2)">Espiritualidad · Mujeres</span>
+        <span style="font-size:12px;font-weight:700;color:var(--accent2)">$27–67</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert alert-success" id="prod-seleccionado" style="display:none">
+    ✅ Producto seleccionado: <strong id="prod-sel-nombre"></strong> — Precio sugerido: <strong id="prod-sel-precio"></strong> — Conversión: <strong id="prod-sel-conv"></strong>
+  </div>
+</div>
+
+<!-- ============ FUNNEL ============ -->
+<div class="page" id="page-funnel">
+  <div class="page-header">
+    <div class="page-title">Funnel de Conversión</div>
+    <div class="page-sub">Estructura tu embudo optimizado para Hotmart + Meta Ads</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Estructura del Funnel</div>
+      <div class="funnel-step">
+        <div class="funnel-num" style="background:#ff6b3325;color:var(--accent)">1</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">Anuncio Meta Ads</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">Video 15-30s o imagen. Gancho en primeros 3 segundos. Identifica el dolor.</div>
+        </div>
+        <span class="badge badge-orange">TOFU</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num" style="background:#ff9f1c25;color:var(--accent2)">2</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">Landing Page / VSL</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">Página sin menú. Video ventas 10-20min o copy largo. Sin distracciones.</div>
+        </div>
+        <span class="badge badge-orange">MOFU</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num" style="background:#2ec4b625;color:var(--accent3)">3</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">Checkout Hotmart</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">Order Bump activo. Garantía visible. Testimonios en checkout.</div>
+        </div>
+        <span class="badge badge-green">BOFU</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num" style="background:#a855f725;color:#d8a1ff">4</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">Upsell / OTO</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">Oferta única post-compra. Sube ticket promedio 30-50%.</div>
+        </div>
+        <span class="badge badge-purple">POST</span>
+      </div>
+      <div class="funnel-step">
+        <div class="funnel-num" style="background:#4ecdc425;color:#4ecdc4">5</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:600">Retargeting WhatsApp/Email</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">Recupera carritos. Secuencia 5 mensajes en 7 días.</div>
+        </div>
+        <span class="badge badge-blue">RETARG</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Simulador de Ingresos</div>
+      <div class="form-group">
+        <label class="form-label">Visitas diarias a la landing</label>
+        <input type="number" class="form-input" id="f-visitas" value="200" oninput="calcFunnel()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tasa de conversión (%)</label>
+        <input type="number" class="form-input" id="f-conv" value="2.5" step="0.1" oninput="calcFunnel()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Precio producto (USD)</label>
+        <input type="number" class="form-input" id="f-precio" value="67" oninput="calcFunnel()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">% Upsell aceptado</label>
+        <input type="number" class="form-input" id="f-upsell-pct" value="25" oninput="calcFunnel()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Precio Upsell (USD)</label>
+        <input type="number" class="form-input" id="f-upsell-precio" value="37" oninput="calcFunnel()">
+      </div>
+      <div class="sep"></div>
+      <div class="grid-2">
+        <div class="stat-card">
+          <div class="stat-label">Ventas / día</div>
+          <div class="stat-value" id="f-vd" style="color:var(--accent)">5</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ingresos brutos / mes</div>
+          <div class="stat-value" id="f-im" style="color:var(--accent2)">$10,050</div>
+        </div>
+      </div>
+      <div class="stat-card" style="margin-top:10px">
+        <div class="stat-label">Ingresos con upsell / mes</div>
+        <div class="stat-value" id="f-iu" style="color:var(--success)">$11,437</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>Checklist Landing Page de Alta Conversión</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="lp-list"></div>
+  </div>
+</div>
+
+<!-- ============ COPY ============ -->
+<div class="page" id="page-copy">
+  <div class="page-header">
+    <div class="page-title">Generador de Copy & VSL</div>
+    <div class="page-sub">Frameworks probados de conversión para info-productos en LATAM</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Parámetros del Copy</div>
+      <div class="form-group">
+        <label class="form-label">Nombre del producto</label>
+        <input type="text" class="form-input" id="c-prod" placeholder="Ej: Dieta Cetogénica LATAM" oninput="buildCopy()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Problema principal del avatar</label>
+        <input type="text" class="form-input" id="c-prob" placeholder="Ej: no puedo bajar de peso" oninput="buildCopy()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Resultado / beneficio principal</label>
+        <input type="text" class="form-input" id="c-res" placeholder="Ej: pierde 8kg de grasa" oninput="buildCopy()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tiempo en que se logra</label>
+        <input type="text" class="form-input" id="c-tiempo" placeholder="Ej: 30 días" oninput="buildCopy()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Precio de la oferta (USD)</label>
+        <input type="text" class="form-input" id="c-precio" placeholder="Ej: $67" oninput="buildCopy()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Framework de copywriting</label>
+        <select class="form-input" id="c-fw" onchange="buildCopy()">
+          <option value="pas">PAS — Problema · Agitar · Solución</option>
+          <option value="aida">AIDA — Atención · Interés · Deseo · Acción</option>
+          <option value="bab">BAB — Before · After · Bridge</option>
+          <option value="titulares">5 Titulares de Alto Impacto</option>
+          <option value="anuncio">Copy de Anuncio Meta (corto)</option>
+        </select>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Copy Generado</div>
+      <textarea class="form-input" id="c-output" style="min-height:340px;font-size:12px;line-height:1.7" readonly>← Completa los campos para generar el copy...</textarea>
+      <button class="btn btn-outline btn-sm" style="margin-top:10px" onclick="copyCopy()">Copiar texto</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>Estructura VSL — Video Sales Letter de 10-15 min</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+      <div style="background:var(--bg3);border-radius:var(--r2);padding:14px;text-align:center">
+        <div style="font-size:20px;margin-bottom:6px">🎯</div>
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px">0–60 seg</div>
+        <div style="font-size:10px;color:var(--text2)">Gancho + promesa clara. Identifica el dolor inmediatamente.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--r2);padding:14px;text-align:center">
+        <div style="font-size:20px;margin-bottom:6px">📖</div>
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px">1–3 min</div>
+        <div style="font-size:10px;color:var(--text2)">Historia de origen. Por qué yo. Credibilidad y empatía.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--r2);padding:14px;text-align:center">
+        <div style="font-size:20px;margin-bottom:6px">💡</div>
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px">3–7 min</div>
+        <div style="font-size:10px;color:var(--text2)">El método. Qué es diferente. Prueba social. Testimonios.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--r2);padding:14px;text-align:center">
+        <div style="font-size:20px;margin-bottom:6px">🎁</div>
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px">7–10 min</div>
+        <div style="font-size:10px;color:var(--text2)">Presentar oferta + bonus + valor total percibido.</div>
+      </div>
+      <div style="background:var(--bg3);border-radius:var(--r2);padding:14px;text-align:center">
+        <div style="font-size:20px;margin-bottom:6px">⚡</div>
+        <div style="font-size:11px;font-weight:700;margin-bottom:4px">10–15 min</div>
+        <div style="font-size:10px;color:var(--text2)">CTA urgente. Garantía 30 días. Última oportunidad.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ META ADS ============ -->
+<div class="page" id="page-meta">
+  <div class="page-header">
+    <div class="page-title">Campañas Meta Ads</div>
+    <div class="page-sub">Estructura CBO profesional para info-productos en LATAM. Pauta en USD o PYG.</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Configurar Campaña</div>
+      <div class="form-group">
+        <label class="form-label">Moneda de pauta</label>
+        <div style="display:flex;gap:8px">
+          <select class="form-input" id="m-moneda" style="width:100px" onchange="calcMeta()">
+            <option value="usd">USD $</option>
+            <option value="pyg">PYG ₲</option>
+          </select>
+          <div style="flex:1">
+            <input type="number" class="form-input" id="m-budget" value="20" oninput="calcMeta()" placeholder="Presupuesto/día">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">País objetivo</label>
+        <select class="form-input" id="m-pais" onchange="calcMeta()">
+          <option value="py">🇵🇾 Paraguay (CPC más bajo)</option>
+          <option value="ar">🇦🇷 Argentina</option>
+          <option value="mx">🇲🇽 México</option>
+          <option value="co">🇨🇴 Colombia</option>
+          <option value="pe">🇵🇪 Perú</option>
+          <option value="bo">🇧🇴 Bolivia</option>
+          <option value="latam">🌎 LATAM multi-país</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Objetivo de campaña</label>
+        <select class="form-input" id="m-objetivo">
+          <option value="ventas">Ventas (Purchase) — para funnel maduro</option>
+          <option value="trafico">Tráfico — inicio, sin datos Pixel</option>
+          <option value="leads">Leads — si usas optin previo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Precio del producto (USD)</label>
+        <input type="number" class="form-input" id="m-precio" value="67" oninput="calcMeta()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Formato principal</label>
+        <select class="form-input" id="m-formato">
+          <option value="video">Video corto 15-30s (Recomendado)</option>
+          <option value="imagen">Imagen estática</option>
+          <option value="carrusel">Carrusel de beneficios</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Proyección de Resultados</div>
+      <div class="gap-12">
+        <div class="stat-card">
+          <div class="stat-label">Presupuesto diario en USD</div>
+          <div class="stat-value" id="m-budget-usd" style="color:var(--accent)">$20.00</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Clicks estimados / día</div>
+          <div class="stat-value" id="m-clicks" style="color:var(--accent2)">111</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ventas proyectadas / mes</div>
+          <div class="stat-value" id="m-ventas" style="color:var(--success)">83</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">ROAS proyectado</div>
+          <div class="stat-value" id="m-roas" style="color:var(--accent3)">9.3x</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span class="dot"></span>Estructura de Campaña CBO Recomendada</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nivel</th><th>Nombre sugerido</th><th>Configuración clave</th><th>Presupuesto</th><th>Prioridad</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-orange">Campaña</span></td><td style="font-family:monospace;font-size:11px">HOT_[Producto]_CBO_PY</td><td>CBO ON · Conversiones · Purchase</td><td>100% del total</td><td><span class="badge badge-green">Config. 1 vez</span></td></tr>
+          <tr><td><span class="badge badge-blue">Ad Set 1</span></td><td>Intereses Fríos</td><td>Intereses del nicho · 18-55 años · Género según nicho</td><td>Auto (CBO)</td><td><span class="badge badge-orange">Principal</span></td></tr>
+          <tr><td><span class="badge badge-blue">Ad Set 2</span></td><td>Lookalike 1% Compradores</td><td>LAL 1% de lista de compradores Hotmart</td><td>Auto (CBO)</td><td><span class="badge badge-green">Escala</span></td></tr>
+          <tr><td><span class="badge badge-purple">Ad Set 3</span></td><td>Retargeting Caliente</td><td>Visitantes landing 30 días + Video views 75%</td><td>Mín. 20% del total</td><td><span class="badge badge-red">Crítico</span></td></tr>
+          <tr><td><span class="badge badge-green">Anuncios</span></td><td>Video A + Video B + Imagen</td><td>3 creatividades distintas por Ad Set</td><td>—</td><td><span class="badge badge-blue">Testear</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Reglas Automáticas de Meta</div>
+      <div class="gap-12">
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Pausar si CPA &gt; 2× precio producto</div><div style="font-size:10px;color:var(--text2)">Protege presupuesto automáticamente</div></div>
+          <span class="badge badge-red">Crear</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">+20% budget si ROAS &gt; 4× por 3 días</div><div style="font-size:10px;color:var(--text2)">Escala ganadores automáticamente</div></div>
+          <span class="badge badge-red">Crear</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Alerta si frecuencia &gt; 3.5</div><div style="font-size:10px;color:var(--text2)">Señal de saturación de audiencia</div></div>
+          <span class="badge badge-orange">Monitorear</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Pausar anuncio si CTR &lt; 0.8% (48hs)</div><div style="font-size:10px;color:var(--text2)">Elimina creatividades perdedoras</div></div>
+          <span class="badge badge-red">Crear</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Textos de Anuncio — Templates Meta</div>
+      <div class="tabs" style="margin-bottom:12px">
+        <div class="tab active" onclick="adTab('hook',this)">Hook</div>
+        <div class="tab" onclick="adTab('body',this)">Body</div>
+        <div class="tab" onclick="adTab('cta',this)">CTA</div>
+      </div>
+      <div id="ad-hook" class="code-block">¿Todavía [PROBLEMA] sin ver resultados reales?
+
+Lo que te voy a mostrar en este video cambió mi vida... y puede cambiar la tuya también.
+
+👇 Mira el video hasta el final</div>
+      <div id="ad-body" class="code-block" style="display:none">En este método aprenderás exactamente cómo [RESULTADO] en solo [TIEMPO].
+
+Sin complicaciones. Sin dietas imposibles.
+Solo un sistema probado que funciona para personas como tú.
+
+✅ Más de [N] personas en LATAM ya lo lograron.</div>
+      <div id="ad-cta" class="code-block" style="display:none">🔴 CUPOS LIMITADOS — Solo por esta semana
+
+Haz clic en "Ver más" y descubre el método completo.
+
+⚡ Precio especial de lanzamiento disponible por tiempo limitado.
+🛡️ Garantía total de 30 días — Sin preguntas.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PIXEL ============ -->
+<div class="page" id="page-pixel">
+  <div class="page-header">
+    <div class="page-title">Pixel Meta & Eventos</div>
+    <div class="page-sub">Configuración correcta del tracking — clave para optimización y CAPI</div>
+  </div>
+
+  <div class="alert alert-warn" style="margin-bottom:20px">
+    ⚠️ <strong>iOS 14+ redujo hasta 40% los datos del Pixel.</strong> La Conversions API (CAPI) es OBLIGATORIA en 2025 para recuperar esos datos. Hotmart tiene integración nativa con CAPI — actívala.
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Eventos a Configurar en tu Funnel</div>
+      <div class="gap-12">
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">PageView</div><div style="font-size:10px;color:var(--text2)">Automático al cargar landing page</div></div>
+          <span class="badge badge-green">Auto</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">ViewContent</div><div style="font-size:10px;color:var(--text2)">Scroll 50% en landing o VSL iniciado</div></div>
+          <span class="badge badge-orange">Configurar</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">InitiateCheckout</div><div style="font-size:10px;color:var(--text2)">Click en botón de compra hacia Hotmart</div></div>
+          <span class="badge badge-red">Importante</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Purchase</div><div style="font-size:10px;color:var(--text2)">Confirmación de pago — página de gracias</div></div>
+          <span class="badge badge-red">CRÍTICO</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Lead</div><div style="font-size:10px;color:var(--text2)">Si usas optin de email previo a la venta</div></div>
+          <span class="badge badge-blue">Opcional</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Código Base del Pixel (en &lt;head&gt;)</div>
+      <div class="code-block" id="px-base">&lt;!-- Meta Pixel Code --&gt;
+&lt;script&gt;
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function()
+{n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;
+n.version='2.0';n.queue=[];t=b.createElement(e);
+t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,window.document,
+'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'TU_PIXEL_ID_AQUI');
+fbq('track', 'PageView');
+&lt;/script&gt;
+&lt;noscript&gt;
+&lt;img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=TU_PIXEL_ID&ev=PageView&noscript=1"/&gt;
+&lt;/noscript&gt;</div>
+      <button class="btn btn-outline btn-sm" style="margin-top:10px" onclick="copyBlock('px-base',this)">Copiar código</button>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Evento Purchase — Página de Gracias</div>
+      <div class="code-block" id="px-purchase">&lt;!-- Pegar en página "Obrigado/Gracias" Hotmart --&gt;
+&lt;script&gt;
+fbq('track', 'Purchase', {
+  value: PRECIO_AQUI,       // Ej: 67.00
+  currency: 'USD',
+  content_name: 'NOMBRE_PRODUCTO',
+  content_ids: ['ID_PRODUCTO'],
+  content_type: 'product',
+  num_items: 1
+});
+&lt;/script&gt;
+
+&lt;!-- Si tienes Upsell, agrega otro evento: --&gt;
+&lt;script&gt;
+fbq('track', 'Purchase', {
+  value: PRECIO_UPSELL,
+  currency: 'USD',
+  content_name: 'NOMBRE_UPSELL',
+  content_type: 'product'
+});
+&lt;/script&gt;</div>
+      <button class="btn btn-outline btn-sm" style="margin-top:10px" onclick="copyBlock('px-purchase',this)">Copiar código</button>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Activar CAPI en Hotmart — Pasos</div>
+      <div class="gap-12">
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">1. Ir a Hotmart → Config. → Integraciones</div><div style="font-size:10px;color:var(--text2)">Buscar "Meta Conversions API"</div></div>
+          <span class="badge badge-blue">Paso 1</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">2. Generar Token de Acceso</div><div style="font-size:10px;color:var(--text2)">Meta Business Manager → Data Sources → Settings</div></div>
+          <span class="badge badge-blue">Paso 2</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">3. Pegar Token en Hotmart</div><div style="font-size:10px;color:var(--text2)">Conectar la fuente de datos</div></div>
+          <span class="badge badge-blue">Paso 3</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">4. Verificar Event Match Quality</div><div style="font-size:10px;color:var(--text2)">Meta Events Manager → debe ser 6+ /10</div></div>
+          <span class="badge badge-red">CRÍTICO</span>
+        </div>
+        <div class="alert alert-success" style="margin-top:4px">
+          ✅ CAPI puede recuperar hasta 30% de conversiones perdidas por iOS 14+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ AUDIENCIAS ============ -->
+<div class="page" id="page-audiencias">
+  <div class="page-header">
+    <div class="page-title">Audiencias para LATAM</div>
+    <div class="page-sub">Segmentaciones con mayor intención de compra para cada nicho</div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span class="dot"></span>Intereses Recomendados por Nicho</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nicho</th><th>Intereses clave en Meta</th><th>Edad</th><th>Género</th><th>CPC est. PY</th><th>Conv. est.</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-green">Salud</span></td>
+            <td><span class="tag">Adelgazar</span><span class="tag">Keto</span><span class="tag">Nutrición</span><span class="tag">Ayuno</span><span class="tag">Dieta</span></td>
+            <td>28–55</td>
+            <td style="color:var(--text2)">Mujeres 70%</td>
+            <td style="color:var(--success);font-weight:700">$0.10–0.20</td>
+            <td><span class="badge badge-green">Alta</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-orange">Finanzas</span></td>
+            <td><span class="tag">Inversión</span><span class="tag">Bitcoin</span><span class="tag">Emprender</span><span class="tag">Bolsa</span></td>
+            <td>22–45</td>
+            <td style="color:var(--text2)">Hombres 65%</td>
+            <td style="color:var(--warn);font-weight:700">$0.20–0.40</td>
+            <td><span class="badge badge-orange">Media</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-red">Relaciones</span></td>
+            <td><span class="tag">Seducción</span><span class="tag">Dating</span><span class="tag">Autoestima</span><span class="tag">Pareja</span></td>
+            <td>18–42</td>
+            <td style="color:var(--text2)">Mixto</td>
+            <td style="color:var(--success);font-weight:700">$0.09–0.18</td>
+            <td><span class="badge badge-green">Alta</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-blue">Negocios IA</span></td>
+            <td><span class="tag">ChatGPT</span><span class="tag">Freelance</span><span class="tag">Marketing digital</span><span class="tag">IA</span></td>
+            <td>20–38</td>
+            <td style="color:var(--text2)">Hombres 60%</td>
+            <td style="color:var(--warn);font-weight:700">$0.25–0.45</td>
+            <td><span class="badge badge-orange">Media</span></td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-purple">Espirit.</span></td>
+            <td><span class="tag">Tarot</span><span class="tag">Manifestación</span><span class="tag">Ley de Atracción</span><span class="tag">Meditación</span></td>
+            <td>30–60</td>
+            <td style="color:var(--text2)">Mujeres 85%</td>
+            <td style="color:var(--success);font-weight:700">$0.08–0.15</td>
+            <td><span class="badge badge-green">Alta</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Audiencias Personalizadas — Prioridad</div>
+      <div class="gap-12">
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Visitantes landing 30 días</div><div style="font-size:10px;color:var(--text2)">Retargeting principal. El más rentable.</div></div>
+          <span class="badge badge-red">🔥 Caliente</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Views video 75%+ del anuncio</div><div style="font-size:10px;color:var(--text2)">Alta intención. Bajo costo de retargeting.</div></div>
+          <span class="badge badge-red">🔥 Caliente</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Compradores anteriores</div><div style="font-size:10px;color:var(--text2)">Para upsells y cross-sells futuros.</div></div>
+          <span class="badge badge-green">LTV</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Lista de emails (CSV Hotmart)</div><div style="font-size:10px;color:var(--text2)">Subir lista de compradores al Ad Manager.</div></div>
+          <span class="badge badge-blue">CRM</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">Interacción con página FB/IG 90 días</div><div style="font-size:10px;color:var(--text2)">Audiencia de fans que no compraron aún.</div></div>
+          <span class="badge badge-orange">Tibio</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Estrategia Lookalike para Paraguay</div>
+      <div class="gap-12">
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">LAL 1% — Compradores PY</div><div style="font-size:10px;color:var(--text2)">Necesitas mín. 100 eventos Purchase. El mejor para escalar.</div></div>
+          <span class="badge badge-green">Top</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">LAL 1-2% — Visitantes 60d</div><div style="font-size:10px;color:var(--text2)">Buen volumen. Funciona con menos datos.</div></div>
+          <span class="badge badge-orange">Bueno</span>
+        </div>
+        <div class="pixel-row">
+          <div><div style="font-size:12px;font-weight:600">LAL 3-5% — Ampliación</div><div style="font-size:10px;color:var(--text2)">Para escalar presupuesto +$100/día.</div></div>
+          <span class="badge badge-blue">Escala</span>
+        </div>
+        <div class="alert alert-warn" style="margin-top:8px">
+          ⚠️ <strong>Paraguay:</strong> El volumen de audiencia es bajo. Para LAL de mejor calidad, incluye también AR, BO, PE como países combinados con targeting por idioma español.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CALCULADORA ============ -->
+<div class="page" id="page-calculadora">
+  <div class="page-header">
+    <div class="page-title">Calculadora ROAS & Rentabilidad</div>
+    <div class="page-sub">Calcula tu punto de equilibrio, ganancia neta y proyecciones reales</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Variables de la Campaña</div>
+      <div class="form-group">
+        <label class="form-label">Inversión mensual en Meta Ads (USD)</label>
+        <input type="number" class="form-input" id="r-inv" value="600" oninput="calcROAS()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Precio del producto (USD)</label>
+        <input type="number" class="form-input" id="r-precio" value="67" oninput="calcROAS()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Comisión Hotmart + procesamiento (%)</label>
+        <input type="number" class="form-input" id="r-comision" value="9.9" step="0.1" oninput="calcROAS()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">% Estimado de reembolsos</label>
+        <input type="number" class="form-input" id="r-reemb" value="3" step="0.5" oninput="calcROAS()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Costos fijos mensuales (hosting, tools, USD)</label>
+        <input type="number" class="form-input" id="r-fijos" value="80" oninput="calcROAS()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Tasa de conversión estimada (%)</label>
+        <input type="number" class="form-input" id="r-conv" value="2.5" step="0.1" oninput="calcROAS()">
+      </div>
+      <div class="form-group">
+        <label class="form-label">CPC promedio esperado (USD)</label>
+        <input type="number" class="form-input" id="r-cpc" value="0.18" step="0.01" oninput="calcROAS()">
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Resultados</div>
+      <div class="gap-12">
+        <div class="stat-card">
+          <div class="stat-label">Clicks mensuales est.</div>
+          <div class="stat-value" id="rr-clicks" style="color:var(--accent2)">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ventas proyectadas / mes</div>
+          <div class="stat-value" id="rr-ventas" style="color:var(--accent)">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ingresos brutos / mes</div>
+          <div class="stat-value" id="rr-bruto" style="color:var(--accent2)">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ganancia neta / mes</div>
+          <div class="stat-value" id="rr-neta" style="color:var(--success)">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">ROAS real</div>
+          <div class="stat-value" id="rr-roas" style="color:var(--accent3)">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Punto de equilibrio</div>
+          <div class="stat-value" id="rr-break" style="color:var(--text2)">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span class="dot"></span>Convertidor USD ↔ Guaraníes (PYG)</div>
+    <div class="grid-2">
+      <div>
+        <div class="form-group">
+          <label class="form-label">Tipo de cambio USD / PYG</label>
+          <input type="number" class="form-input" id="tc" value="7500" oninput="calcPYG()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Monto en USD</label>
+          <input type="number" class="form-input" id="tc-usd" value="600" oninput="calcPYG()">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Monto en Guaraníes (PYG)</label>
+          <input type="number" class="form-input" id="tc-pyg" value="4500000" oninput="calcPYGinverse()">
+        </div>
+      </div>
+      <div>
+        <div class="stat-card" style="margin-bottom:10px">
+          <div class="stat-label">USD → PYG</div>
+          <div class="stat-value" id="res-pyg" style="color:var(--accent)">₲4,500,000</div>
+        </div>
+        <div class="stat-card" style="margin-bottom:10px">
+          <div class="stat-label">PYG → USD</div>
+          <div class="stat-value" id="res-usd2">$600.00</div>
+        </div>
+        <div class="alert alert-info">
+          💡 Meta permite pautar en PYG.<br>Mínimo recomendado: ₲75,000/día (~$10 USD)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRECIOS ============ -->
+<div class="page" id="page-precios">
+  <div class="page-header">
+    <div class="page-title">Estrategia de Precios</div>
+    <div class="page-sub">Precios psicológicos probados para LATAM + equivalencias PYG/USD</div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Precios Psicológicos Recomendados</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tipo</th><th>USD</th><th>PYG (÷7,500)</th><th>Conversión</th></tr></thead>
+          <tbody>
+            <tr><td>Ticket bajo</td><td style="color:var(--success);font-weight:700">$17 / $27 / $37</td><td style="color:var(--text2)">₲127k / 202k / 277k</td><td><span class="badge badge-green">Muy alta</span></td></tr>
+            <tr><td>Ticket medio</td><td style="color:var(--accent2);font-weight:700">$47 / $67 / $97</td><td style="color:var(--text2)">₲352k / 502k / 727k</td><td><span class="badge badge-orange">Alta</span></td></tr>
+            <tr><td>Ticket alto</td><td style="color:var(--accent);font-weight:700">$127 / $197 / $297</td><td style="color:var(--text2)">₲952k / 1.47M / 2.22M</td><td><span class="badge badge-red">Media-baja</span></td></tr>
+            <tr><td>Order Bump</td><td style="color:var(--accent3);font-weight:700">$17 / $27</td><td style="color:var(--text2)">₲127k / 202k</td><td><span class="badge badge-green">25–35%</span></td></tr>
+            <tr><td>Upsell OTO</td><td style="color:var(--accent3);font-weight:700">$37 / $47 / $67</td><td style="color:var(--text2)">₲277k / 352k / 502k</td><td><span class="badge badge-orange">20–30%</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Reglas de Oro para Precios en LATAM</div>
+      <div class="gap-12">
+        <div class="alert alert-info">💡 <strong>Termina en 7, no en 9:</strong> $47, $67, $97 convierten mejor que $49, $69, $99 en mercados hispanohablantes.</div>
+        <div class="alert alert-warn">⚠️ <strong>Hotmart siempre cobra en USD.</strong> Si el cliente paga en PYG, Hotmart hace la conversión automáticamente. Tú recibes en USD.</div>
+        <div class="alert alert-success">✅ <strong>Stack ganador:</strong> Producto $67 + Order Bump $27 + Upsell $47 = ticket promedio real ~$90 USD</div>
+        <div style="background:var(--bg3);border-radius:var(--r2);padding:12px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:8px">Equivalencias Meta Ads PY</div>
+          <div style="font-size:11px;color:var(--text2);line-height:1.9">
+            $5/día = ₲37,500/día<br>
+            $10/día = ₲75,000/día<br>
+            $20/día = ₲150,000/día<br>
+            $30/día = ₲225,000/día<br>
+            $50/día = ₲375,000/día<br>
+            $100/día = ₲750,000/día
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHECKLIST ============ -->
+<div class="page" id="page-checklist">
+  <div class="page-header">
+    <div class="page-title">Checklist de Lanzamiento</div>
+    <div class="page-sub">Lista completa de verificación antes de encender tus anuncios</div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span class="dot"></span>Progreso general</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="progress-wrap" style="height:10px"><div class="progress-bar" id="ck-prog" style="width:0%"></div></div>
+      <div style="font-size:18px;font-weight:800;color:var(--accent);min-width:48px" id="ck-pct">0%</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Hotmart & Producto</div>
+      <div id="ck-1" class="gap-12"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Landing Page & Copy</div>
+      <div id="ck-2" class="gap-12"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Meta Ads & Pixel</div>
+      <div id="ck-3" class="gap-12"></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><span class="dot"></span>Post-Lanzamiento</div>
+      <div id="ck-4" class="gap-12"></div>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ─── NAVIGATION ───
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const page = item.dataset.page;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    item.classList.add('active');
+  });
+});
+
+// ─── PRODUCT SELECT ───
+function selectProduct(el, name, cat, price, conv) {
+  document.querySelectorAll('.prod-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('prod-seleccionado').style.display = 'block';
+  document.getElementById('prod-sel-nombre').textContent = name;
+  document.getElementById('prod-sel-precio').textContent = price;
+  document.getElementById('prod-sel-conv').textContent = conv;
+  document.getElementById('st-prod').textContent = '✓ ' + name;
+  document.getElementById('st-prod').style.color = 'var(--success)';
+  document.getElementById('pb-1').style.width = '100%';
+  document.getElementById('c-prod').value = name;
+  buildCopy();
+}
+
+// ─── FUNNEL CALC ───
+function calcFunnel() {
+  const v = +document.getElementById('f-visitas').value || 200;
+  const c = +document.getElementById('f-conv').value || 2.5;
+  const p = +document.getElementById('f-precio').value || 67;
+  const up = +document.getElementById('f-upsell-pct').value || 25;
+  const upP = +document.getElementById('f-upsell-precio').value || 37;
+  const vDay = Math.round(v * c / 100);
+  const imMes = vDay * 30 * p;
+  const upMes = Math.round(vDay * 30 * up / 100) * upP;
+  document.getElementById('f-vd').textContent = vDay;
+  document.getElementById('f-im').textContent = '$' + imMes.toLocaleString();
+  document.getElementById('f-iu').textContent = '$' + (imMes + upMes).toLocaleString();
+  document.getElementById('dash-ingresos').textContent = '$' + imMes.toLocaleString();
+  document.getElementById('dash-config-msg').textContent = '~' + (vDay * 30) + ' ventas / mes estimadas';
+  document.getElementById('st-funnel').textContent = '✓ Configurado';
+  document.getElementById('st-funnel').style.color = 'var(--success)';
+  document.getElementById('pb-2').style.width = '80%';
+}
+
+// LP Checklist
+const lpItems = [
+  'Hero con promesa clara visible sin scroll',
+  'Video o imagen de alta calidad (arriba del fold)',
+  'Beneficios en bullets concretos (no características)',
+  'Prueba social con foto y nombre real',
+  'Garantía 30 días visible y destacada',
+  'Botón CTA color llamativo (naranja/rojo)',
+  'Temporizador de escasez (si aplica)',
+  'Sello de seguridad y métodos de pago',
+  'Sin menú, sin links de fuga externos',
+  'Carga en menos de 3 segundos (mobile)',
+  'Versión 100% mobile optimizada',
+  'Número de testimonios visibles (mín. 3)'
+];
+
+// ─── COPY GENERATOR ───
+function buildCopy() {
+  const prod = document.getElementById('c-prod').value || '[Producto]';
+  const prob = document.getElementById('c-prob').value || '[el problema]';
+  const res = document.getElementById('c-res').value || '[el resultado]';
+  const tiempo = document.getElementById('c-tiempo').value || '[X días]';
+  const precio = document.getElementById('c-precio').value || '$67';
+  const fw = document.getElementById('c-fw').value;
+  let out = '';
+  if (fw === 'pas') {
+    out = `── FRAMEWORK PAS ──\n\n🔴 PROBLEMA:\n¿Sigues sufriendo de ${prob} sin ver resultados reales?\n\nSé exactamente cómo te sientes. Yo también estuve ahí durante años, intentando todo sin éxito.\n\n🔥 AGITAR:\nCada día que pasa sin resolver ${prob}, el problema empeora. Mientras personas como tú siguen buscando la solución correcta, otros ya consiguieron ${res} y viven los beneficios de ese cambio.\n\n¿Qué pasaría si en ${tiempo} tuvieras ese mismo resultado?\n\n✅ SOLUCIÓN:\n${prod} es el sistema paso a paso que te llevará de ${prob} a ${res} en solo ${tiempo}.\n\nSin complicaciones. Sin adivinar. Con el método exacto que ya funcionó para cientos de personas en LATAM.\n\n👉 Haz clic en el botón y accede hoy por solo ${precio}.`;
+  } else if (fw === 'aida') {
+    out = `── FRAMEWORK AIDA ──\n\n⚡ ATENCIÓN:\nDescubre cómo ${res} en solo ${tiempo}... incluso si ya lo intentaste todo antes.\n\n💡 INTERÉS:\n${prod} es el único método creado específicamente para personas de LATAM que luchan con ${prob} día a día y no encuentran resultados duraderos.\n\nNo es un "truco rápido". Es un sistema probado con metodología clara, paso a paso.\n\n❤️ DESEO:\nImagina tu vida dentro de ${tiempo}: sin ${prob}, con ${res} logrado. Esa es exactamente la realidad que están viviendo nuestros alumnos ahora mismo.\n\n→ "Pensé que era imposible para mí. Ahora no puedo creer los resultados." — alumno LATAM\n\n🛒 ACCIÓN:\nCupos limitados para este precio de lanzamiento de ${precio}.\n\nHaz clic AHORA antes de que el precio suba.`;
+  } else if (fw === 'bab') {
+    out = `── FRAMEWORK BAB ──\n\nANTES:\nEstabas atrapado/a en ${prob}.\nNada funcionaba. Cada intento terminaba igual: más frustración, más gastos, mismo resultado cero.\n\nDESPUÉS:\nAhora imagina esto: ${res} en solo ${tiempo}.\n\nConfianza. Claridad. Resultados reales que puedes mostrarle al mundo.\nUna versión completamente diferente de ti mismo/a.\n\nPUENTE:\n${prod} es el camino exacto entre donde estás hoy y ese resultado que tanto quieres.\n\nNo necesitas experiencia previa. No necesitas tiempo extra.\nSolo seguir el sistema que ya funcionó para cientos de personas.\n\nAccede hoy por ${precio} con garantía total de 30 días.`;
+  } else if (fw === 'titulares') {
+    out = `── 5 TITULARES DE ALTO IMPACTO ──\n\n1. "Cómo ${res} en ${tiempo} sin sufrir más por ${prob} — paso a paso"\n\n2. "El método que nadie te contó para ${res} en LATAM"\n\n3. "¿Sigues con ${prob}? Esto lo cambia todo en ${tiempo}"\n\n4. "Más de [N] personas ya lograron ${res} con ${prod}"\n\n5. "Solo por hoy: accede a ${prod} por ${precio} con garantía de 30 días"\n\n── SUBTÍTULOS COMPLEMENTARIOS ──\n\n→ "Funciona aunque hayas intentado todo antes"\n→ "Sin complicaciones, sin conocimientos previos"\n→ "Diseñado para personas de LATAM que ya están hartas de no ver resultados"`;
+  } else {
+    out = `── COPY CORTO PARA ANUNCIO META ──\n\n🎯 TEXTO PRINCIPAL (Primary Text):\n¿Todavía ${prob}?\n\nLo que te voy a mostrar en este video cambió mi vida... y puede cambiar la tuya también.\n\nEn ${tiempo}: ${res}.\n\n✅ Ya lo lograron más de [N] personas en LATAM.\n👇 Mira el video hasta el final.\n\n── TITULAR (Headline):\n${prod} — ${res} en ${tiempo}\n\n── DESCRIPCIÓN (Description):\nMétodo probado en LATAM. Garantía 30 días. ${precio} hoy.`;
+  }
+  document.getElementById('c-output').value = out;
+}
+
+function copyCopy() {
+  const t = document.getElementById('c-output').value;
+  navigator.clipboard.writeText(t).catch(() => {});
+  event.target.textContent = '✓ Copiado!';
+  setTimeout(() => event.target.textContent = 'Copiar texto', 2000);
+}
+
+// ─── META CALC ───
+function calcMeta() {
+  const mon = document.getElementById('m-moneda').value;
+  const b = +document.getElementById('m-budget').value || 20;
+  const pais = document.getElementById('m-pais').value;
+  const precio = +document.getElementById('m-precio').value || 67;
+  const cpcMap = { py: 0.18, ar: 0.22, mx: 0.28, co: 0.20, pe: 0.18, bo: 0.15, latam: 0.25 };
+  const tc = 7500;
+  const budgetUSD = mon === 'pyg' ? b / tc : b;
+  const cpc = cpcMap[pais] || 0.20;
+  const clicks = Math.round(budgetUSD / cpc);
+  const ventas = Math.round(clicks * 0.025);
+  const ventasMes = ventas * 30;
+  const ingresosMes = ventasMes * precio;
+  const invMes = budgetUSD * 30;
+  const roas = (ingresosMes / invMes).toFixed(1);
+  document.getElementById('m-budget-usd').textContent = '$' + budgetUSD.toFixed(2);
+  document.getElementById('m-clicks').textContent = clicks.toLocaleString();
+  document.getElementById('m-ventas').textContent = ventasMes.toLocaleString();
+  document.getElementById('m-roas').textContent = roas + 'x';
+}
+
+// ─── AD TABS ───
+function adTab(name, el) {
+  ['hook','body','cta'].forEach(n => document.getElementById('ad-' + n).style.display = 'none');
+  document.getElementById('ad-' + name).style.display = 'block';
+  el.parentElement.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ─── ROAS CALC ───
+function calcROAS() {
+  const inv = +document.getElementById('r-inv').value || 600;
+  const precio = +document.getElementById('r-precio').value || 67;
+  const com = +document.getElementById('r-comision').value || 9.9;
+  const reemb = +document.getElementById('r-reemb').value || 3;
+  const fijos = +document.getElementById('r-fijos').value || 80;
+  const conv = +document.getElementById('r-conv').value || 2.5;
+  const cpc = +document.getElementById('r-cpc').value || 0.18;
+  const clicks = Math.round(inv / cpc);
+  const ventas = Math.round(clicks * conv / 100);
+  const ingresos = ventas * precio;
+  const neto = ingresos * (1 - com / 100) * (1 - reemb / 100);
+  const ganancia = neto - inv - fijos;
+  const roas = (ingresos / inv).toFixed(2);
+  const breakE = Math.ceil((inv + fijos) / (precio * (1 - com / 100) * (1 - reemb / 100)));
+  document.getElementById('rr-clicks').textContent = clicks.toLocaleString();
+  document.getElementById('rr-ventas').textContent = ventas;
+  document.getElementById('rr-bruto').textContent = '$' + ingresos.toLocaleString();
+  document.getElementById('rr-neta').textContent = '$' + Math.round(ganancia).toLocaleString();
+  document.getElementById('rr-neta').style.color = ganancia > 0 ? 'var(--success)' : 'var(--danger)';
+  document.getElementById('rr-roas').textContent = roas + 'x';
+  document.getElementById('rr-roas').style.color = +roas >= 3.5 ? 'var(--success)' : 'var(--danger)';
+  document.getElementById('rr-break').textContent = breakE + ' ventas/mes';
+}
+
+// ─── PYG CONV ───
+function calcPYG() {
+  const tc = +document.getElementById('tc').value || 7500;
+  const usd = +document.getElementById('tc-usd').value || 0;
+  document.getElementById('res-pyg').textContent = '₲' + Math.round(usd * tc).toLocaleString();
+  document.getElementById('tc-pyg').value = Math.round(usd * tc);
+  const pyg2 = +document.getElementById('tc-pyg').value || 0;
+  document.getElementById('res-usd2').textContent = '$' + (pyg2 / tc).toFixed(2);
+}
+function calcPYGinverse() {
+  const tc = +document.getElementById('tc').value || 7500;
+  const pyg = +document.getElementById('tc-pyg').value || 0;
+  const usd = pyg / tc;
+  document.getElementById('res-usd2').textContent = '$' + usd.toFixed(2);
+  document.getElementById('tc-usd').value = usd.toFixed(2);
+  document.getElementById('res-pyg').textContent = '₲' + Math.round(pyg).toLocaleString();
+}
+
+// ─── CODE COPY ───
+function copyBlock(id, btn) {
+  const t = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(t).catch(() => {});
+  btn.textContent = '✓ Copiado!';
+  setTimeout(() => btn.textContent = 'Copiar código', 2000);
+}
+
+// ─── CHECKLISTS BUILD ───
+const checkData = {
+  'ck-1': [
+    'Cuenta Hotmart creada y verificada',
+    'Producto digital creado y aprobado',
+    'Precio configurado en USD',
+    'Política de reembolso 30 días activada',
+    'Página de entrega del producto lista',
+    'Integración email (ActiveCampaign / Mailchimp)',
+    'Order Bump configurado en checkout',
+    'Upsell OTO configurado post-compra',
+    'Afiliados activados (comisión 40-50%)',
+    'Integración CAPI Meta activa en Hotmart'
+  ],
+  'ck-2': [
+    'Dominio propio .com conectado',
+    'HTTPS / SSL activo',
+    'Velocidad < 3s en mobile (PageSpeed)',
+    'Sin menú ni links externos de fuga',
+    'Hero con promesa clara arriba del fold',
+    'Video VSL o imagen de alta calidad',
+    'Beneficios en bullets (no características)',
+    'Testimonios con foto y nombre real (mín. 3)',
+    'Garantía visible y destacada',
+    'CTA con botón color llamativo',
+    'Temporizador de escasez activo',
+    'Versión mobile 100% optimizada'
+  ],
+  'ck-3': [
+    'Business Manager verificado',
+    'Pixel instalado y verificado en todos los pasos',
+    'Evento Purchase funcionando en página gracias',
+    'Evento InitiateCheckout configurado',
+    'Dominio verificado en Meta',
+    'CAPI configurado y con Event Match Score 6+',
+    'Campaña CBO creada con 3 Ad Sets',
+    'Mínimo 3 creatividades por Ad Set',
+    'Reglas automáticas creadas',
+    'Audiencias personalizadas configuradas',
+    'Presupuesto diario y límite configurados',
+    'Método de pago Meta activo (USD o PYG)'
+  ],
+  'ck-4': [
+    'Monitorear CPA/ROAS primeras 72 horas',
+    'Verificar eventos Pixel en Events Manager',
+    'Revisar frecuencia de anuncios cada 3 días',
+    'Email de bienvenida automático funcionando',
+    'Secuencia retargeting WhatsApp/email lista',
+    'Test A/B de creatividades semana 2',
+    'Escalar Ad Sets con ROAS > 3.5x',
+    'Pausar anuncios con CTR < 0.8% (48hs)',
+    'Crear LAL 1% cuando lleves 100+ compras',
+    'Revisar CPM y ajustar audiencias si sube'
+  ]
+};
+
+function buildChecklists() {
+  Object.entries(checkData).forEach(([id, items]) => {
+    const c = document.getElementById(id);
+    items.forEach(item => {
+      const label = document.createElement('label');
+      label.style.cssText = 'display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text);line-height:1.4';
+      label.innerHTML = `<input type="checkbox" style="accent-color:var(--accent);margin-top:1px;flex-shrink:0" onchange="updateCkProg()"> ${item}`;
+      c.appendChild(label);
+    });
+  });
+}
+
+function buildLPChecklist() {
+  const c = document.getElementById('lp-list');
+  lpItems.forEach(item => {
+    const label = document.createElement('label');
+    label.style.cssText = 'display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer;color:var(--text);line-height:1.4';
+    label.innerHTML = `<input type="checkbox" style="accent-color:var(--accent);margin-top:1px;flex-shrink:0"> ${item}`;
+    c.appendChild(label);
+  });
+}
+
+function updateCkProg() {
+  const all = document.querySelectorAll('#page-checklist input[type=checkbox]');
+  const done = document.querySelectorAll('#page-checklist input[type=checkbox]:checked');
+  const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+  document.getElementById('ck-prog').style.width = pct + '%';
+  document.getElementById('ck-pct').textContent = pct + '%';
+  document.getElementById('st-check').textContent = pct + '%';
+  document.getElementById('pb-3').style.width = pct + '%';
+}
+
+// ─── INIT ───
+window.addEventListener('load', () => {
+  buildChecklists();
+  buildLPChecklist();
+  calcFunnel();
+  calcROAS();
+  calcMeta();
+  calcPYG();
+});
+</script>
+</body>
+</html>
